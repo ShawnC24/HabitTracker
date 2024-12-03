@@ -1,3 +1,4 @@
+import '/auth/firebase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -42,8 +43,22 @@ class _SocialPageWidgetState extends State<SocialPageWidget> {
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         appBar: AppBar(
-          backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+          backgroundColor: FlutterFlowTheme.of(context).primary,
           automaticallyImplyLeading: false,
+          leading: FlutterFlowIconButton(
+            borderColor: Colors.transparent,
+            borderRadius: 30.0,
+            borderWidth: 1.0,
+            buttonSize: 60.0,
+            icon: const Icon(
+              Icons.arrow_back_rounded,
+              color: Colors.white,
+              size: 30.0,
+            ),
+            onPressed: () async {
+              context.pop();
+            },
+          ),
           title: Text(
             'Social Habits',
             style: FlutterFlowTheme.of(context).headlineMedium.override(
@@ -51,21 +66,9 @@ class _SocialPageWidgetState extends State<SocialPageWidget> {
                   letterSpacing: 0.0,
                 ),
           ),
-          actions: [
-            FlutterFlowIconButton(
-              buttonSize: 48.0,
-              icon: Icon(
-                Icons.person_add,
-                color: FlutterFlowTheme.of(context).primaryText,
-                size: 24.0,
-              ),
-              onPressed: () {
-                print('IconButton pressed ...');
-              },
-            ),
-          ],
-          centerTitle: false,
-          elevation: 0.0,
+          actions: const [],
+          centerTitle: true,
+          elevation: 2.0,
         ),
         body: SafeArea(
           top: true,
@@ -118,10 +121,8 @@ class _SocialPageWidgetState extends State<SocialPageWidget> {
                                         borderRadius:
                                             BorderRadius.circular(25.0),
                                       ),
-                                      child: Icon(
+                                      child: const Icon(
                                         Icons.fitness_center,
-                                        color: FlutterFlowTheme.of(context)
-                                            .primary,
                                         size: 24.0,
                                       ),
                                     ),
@@ -255,32 +256,24 @@ class _SocialPageWidgetState extends State<SocialPageWidget> {
                                             borderRadius:
                                                 BorderRadius.circular(25.0),
                                           ),
-                                          child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(25.0),
-                                            child: Image.network(
-                                              'https://images.unsplash.com/photo-1704722408439-fb23ed6187ea?w=500&h=500',
-                                              width: 50.0,
-                                              height: 50.0,
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ),
                                         ),
                                         Column(
                                           mainAxisSize: MainAxisSize.min,
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            Text(
-                                              'Sarah completed her meditation',
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily:
-                                                            'Plus Jakarta Sans',
-                                                        letterSpacing: 0.0,
-                                                      ),
+                                            AuthUserStreamWidget(
+                                              builder: (context) => Text(
+                                                currentUserDisplayName,
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Plus Jakarta Sans',
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                              ),
                                             ),
                                             Text(
                                               '2 hours ago',
@@ -349,32 +342,24 @@ class _SocialPageWidgetState extends State<SocialPageWidget> {
                                             borderRadius:
                                                 BorderRadius.circular(25.0),
                                           ),
-                                          child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(25.0),
-                                            child: Image.network(
-                                              'https://images.unsplash.com/photo-1607842858972-a9352fbd13c8?w=500&h=500',
-                                              width: 50.0,
-                                              height: 50.0,
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ),
                                         ),
                                         Column(
                                           mainAxisSize: MainAxisSize.min,
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            Text(
-                                              'John started reading habit',
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily:
-                                                            'Plus Jakarta Sans',
-                                                        letterSpacing: 0.0,
-                                                      ),
+                                            AuthUserStreamWidget(
+                                              builder: (context) => Text(
+                                                currentUserDisplayName,
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Plus Jakarta Sans',
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                              ),
                                             ),
                                             Text(
                                               '5 hours ago',
@@ -501,18 +486,6 @@ class _SocialPageWidgetState extends State<SocialPageWidget> {
                                                 letterSpacing: 0.0,
                                               ),
                                         ),
-                                        Text(
-                                          '4 habits in common',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodySmall
-                                              .override(
-                                                fontFamily: 'Plus Jakarta Sans',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryText,
-                                                letterSpacing: 0.0,
-                                              ),
-                                        ),
                                       ],
                                     ),
                                   ].divide(const SizedBox(width: 12.0)),
@@ -585,18 +558,6 @@ class _SocialPageWidgetState extends State<SocialPageWidget> {
                                                 letterSpacing: 0.0,
                                               ),
                                         ),
-                                        Text(
-                                          '3 habits in common',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodySmall
-                                              .override(
-                                                fontFamily: 'Plus Jakarta Sans',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryText,
-                                                letterSpacing: 0.0,
-                                              ),
-                                        ),
                                       ],
                                     ),
                                   ].divide(const SizedBox(width: 12.0)),
@@ -634,8 +595,30 @@ class _SocialPageWidgetState extends State<SocialPageWidget> {
                     ),
                   ),
                   FFButtonWidget(
-                    onPressed: () {
-                      print('Button pressed ...');
+                    onPressed: () async {
+                      var confirmDialogResponse = await showDialog<bool>(
+                            context: context,
+                            builder: (alertDialogContext) {
+                              return AlertDialog(
+                                title: const Text('Share Habit'),
+                                content:
+                                    const Text('Are you sure you want to share '),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () => Navigator.pop(
+                                        alertDialogContext, false),
+                                    child: const Text('Cancel'),
+                                  ),
+                                  TextButton(
+                                    onPressed: () =>
+                                        Navigator.pop(alertDialogContext, true),
+                                    child: const Text('Confirm'),
+                                  ),
+                                ],
+                              );
+                            },
+                          ) ??
+                          false;
                     },
                     text: 'Start a Shared Habit',
                     options: FFButtonOptions(

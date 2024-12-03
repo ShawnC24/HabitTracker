@@ -1,3 +1,4 @@
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_choice_chips.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -30,11 +31,11 @@ class _AddahabitWidgetState extends State<AddahabitWidget> {
     super.initState();
     _model = createModel(context, () => AddahabitModel());
 
-    _model.textController1 ??= TextEditingController();
-    _model.textFieldFocusNode1 ??= FocusNode();
+    _model.nameTextController ??= TextEditingController();
+    _model.nameFocusNode ??= FocusNode();
 
-    _model.textController2 ??= TextEditingController();
-    _model.textFieldFocusNode2 ??= FocusNode();
+    _model.descriptionTextController ??= TextEditingController();
+    _model.descriptionFocusNode ??= FocusNode();
   }
 
   @override
@@ -136,10 +137,9 @@ class _AddahabitWidgetState extends State<AddahabitWidget> {
                                           borderRadius:
                                               BorderRadius.circular(25.0),
                                         ),
-                                        child: Icon(
+                                        child: const Icon(
                                           Icons.fitness_center,
-                                          color: FlutterFlowTheme.of(context)
-                                              .primary,
+                                          color: Colors.black,
                                           size: 24.0,
                                         ),
                                       ),
@@ -364,10 +364,8 @@ class _AddahabitWidgetState extends State<AddahabitWidget> {
                                           borderRadius:
                                               BorderRadius.circular(25.0),
                                         ),
-                                        child: Icon(
+                                        child: const Icon(
                                           Icons.pets,
-                                          color: FlutterFlowTheme.of(context)
-                                              .primary,
                                           size: 24.0,
                                         ),
                                       ),
@@ -446,8 +444,8 @@ class _AddahabitWidgetState extends State<AddahabitWidget> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             TextFormField(
-                              controller: _model.textController1,
-                              focusNode: _model.textFieldFocusNode1,
+                              controller: _model.nameTextController,
+                              focusNode: _model.nameFocusNode,
                               autofocus: false,
                               obscureText: false,
                               decoration: InputDecoration(
@@ -502,12 +500,12 @@ class _AddahabitWidgetState extends State<AddahabitWidget> {
                                     letterSpacing: 0.0,
                                   ),
                               minLines: 1,
-                              validator: _model.textController1Validator
+                              validator: _model.nameTextControllerValidator
                                   .asValidator(context),
                             ),
                             TextFormField(
-                              controller: _model.textController2,
-                              focusNode: _model.textFieldFocusNode2,
+                              controller: _model.descriptionTextController,
+                              focusNode: _model.descriptionFocusNode,
                               autofocus: false,
                               obscureText: false,
                               decoration: InputDecoration(
@@ -563,7 +561,8 @@ class _AddahabitWidgetState extends State<AddahabitWidget> {
                                   ),
                               maxLines: 4,
                               minLines: 1,
-                              validator: _model.textController2Validator
+                              validator: _model
+                                  .descriptionTextControllerValidator
                                   .asValidator(context),
                             ),
                             Container(
@@ -745,6 +744,12 @@ class _AddahabitWidgetState extends State<AddahabitWidget> {
                                             );
                                           });
                                         }
+
+                                        await HabitsRecord.collection
+                                            .doc()
+                                            .set(createHabitsRecordData(
+                                              reminderTime: _model.datePicked,
+                                            ));
                                       },
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
@@ -979,8 +984,45 @@ class _AddahabitWidgetState extends State<AddahabitWidget> {
                             },
                           ) ??
                           false;
+                      if (confirmDialogResponse) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              '',
+                              style: TextStyle(
+                                color: FlutterFlowTheme.of(context).primaryText,
+                              ),
+                            ),
+                            duration: const Duration(milliseconds: 1550),
+                            backgroundColor:
+                                FlutterFlowTheme.of(context).primary,
+                          ),
+                        );
 
-                      context.pushNamed('homescreen');
+                        await HabitsRecord.collection
+                            .doc()
+                            .set(createHabitsRecordData(
+                              name: '',
+                              description: '',
+                              frequency: '',
+                              reminderTime: _model.datePicked,
+                            ));
+
+                        context.pushNamed('HabitHome');
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              'Habit not created!',
+                              style: TextStyle(
+                                color: FlutterFlowTheme.of(context).primaryText,
+                              ),
+                            ),
+                            duration: const Duration(milliseconds: 4000),
+                            backgroundColor: const Color(0xFFD2393C),
+                          ),
+                        );
+                      }
                     },
                     text: 'Create Habit',
                     options: FFButtonOptions(

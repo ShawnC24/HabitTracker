@@ -60,8 +60,8 @@ class _PresetSEttingsWidgetState extends State<PresetSEttingsWidget> {
               color: FlutterFlowTheme.of(context).primaryText,
               size: 24.0,
             ),
-            onPressed: () {
-              print('IconButton pressed ...');
+            onPressed: () async {
+              context.safePop();
             },
           ),
           title: Text(
@@ -112,9 +112,8 @@ class _PresetSEttingsWidgetState extends State<PresetSEttingsWidget> {
                                     color: FlutterFlowTheme.of(context).accent1,
                                     borderRadius: BorderRadius.circular(30.0),
                                   ),
-                                  child: Icon(
+                                  child: const Icon(
                                     Icons.fitness_center,
-                                    color: FlutterFlowTheme.of(context).primary,
                                     size: 30.0,
                                   ),
                                 ),

@@ -1,4 +1,5 @@
 import '/auth/firebase_auth/auth_util.dart';
+import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -48,6 +49,27 @@ class _RegWidgetState extends State<RegWidget> {
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
+        appBar: AppBar(
+          backgroundColor: FlutterFlowTheme.of(context).primary,
+          automaticallyImplyLeading: false,
+          leading: FlutterFlowIconButton(
+            borderColor: Colors.transparent,
+            borderRadius: 30.0,
+            borderWidth: 1.0,
+            buttonSize: 60.0,
+            icon: const Icon(
+              Icons.arrow_back_rounded,
+              color: Colors.white,
+              size: 30.0,
+            ),
+            onPressed: () async {
+              context.pop();
+            },
+          ),
+          actions: const [],
+          centerTitle: true,
+          elevation: 2.0,
+        ),
         body: SafeArea(
           top: true,
           child: Row(
@@ -85,7 +107,7 @@ class _RegWidgetState extends State<RegWidget> {
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 32.0, 0.0, 0.0, 0.0),
                             child: Text(
-                              'Habit Tracker',
+                              'HabitFlow',
                               style: FlutterFlowTheme.of(context)
                                   .displaySmall
                                   .override(
@@ -410,7 +432,7 @@ class _RegWidgetState extends State<RegWidget> {
                                       }
 
                                       context.goNamedAuth(
-                                          'homescreen', context.mounted);
+                                          'HabitHome', context.mounted);
                                     },
                                     text: 'Create Account',
                                     options: FFButtonOptions(

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '/backend/backend.dart';
 
 import '/auth/base_auth_user_provider.dart';
 
@@ -73,20 +74,18 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       errorBuilder: (context, state) =>
-          appStateNotifier.loggedIn ? const NavBarPage() : const RegWidget(),
+          appStateNotifier.loggedIn ? const NavBarPage() : const WelcomeWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
           builder: (context, _) =>
-              appStateNotifier.loggedIn ? const NavBarPage() : const RegWidget(),
+              appStateNotifier.loggedIn ? const NavBarPage() : const WelcomeWidget(),
         ),
         FFRoute(
           name: 'addahabit',
           path: '/addahabit',
-          builder: (context, params) => params.isEmpty
-              ? const NavBarPage(initialPage: 'addahabit')
-              : const AddahabitWidget(),
+          builder: (context, params) => const AddahabitWidget(),
         ),
         FFRoute(
           name: 'reg',
@@ -97,13 +96,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'login',
           path: '/login',
           builder: (context, params) => const LoginWidget(),
-        ),
-        FFRoute(
-          name: 'homescreen',
-          path: '/homescreen',
-          builder: (context, params) => params.isEmpty
-              ? const NavBarPage(initialPage: 'homescreen')
-              : const HomescreenWidget(),
         ),
         FFRoute(
           name: 'presetSEttings',
@@ -136,6 +128,28 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'Welcome',
           path: '/welcome',
           builder: (context, params) => const WelcomeWidget(),
+        ),
+        FFRoute(
+          name: 'HabitHome',
+          path: '/habitHome',
+          asyncParams: {
+            'habit': getDoc(['habits'], HabitsRecord.fromSnapshot),
+          },
+          builder: (context, params) => params.isEmpty
+              ? const NavBarPage(initialPage: 'HabitHome')
+              : HabitHomeWidget(
+                  habit: params.getParam(
+                    'habit',
+                    ParamType.Document,
+                  ),
+                ),
+        ),
+        FFRoute(
+          name: 'settings',
+          path: '/settings',
+          builder: (context, params) => params.isEmpty
+              ? const NavBarPage(initialPage: 'settings')
+              : const SettingsWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
@@ -306,7 +320,7 @@ class FFRoute {
 
           if (requireAuth && !appStateNotifier.loggedIn) {
             appStateNotifier.setRedirectLocationIfUnset(state.uri.toString());
-            return '/reg';
+            return '/welcome';
           }
           return null;
         },

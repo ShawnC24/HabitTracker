@@ -1,3 +1,4 @@
+import '/auth/firebase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -36,10 +37,10 @@ class _LoginWidgetState extends State<LoginWidget> {
       });
     }
 
-    _model.textController1 ??= TextEditingController();
+    _model.emailTextController ??= TextEditingController();
     _model.textFieldFocusNode1 ??= FocusNode();
 
-    _model.textController2 ??= TextEditingController();
+    _model.passwordTextController ??= TextEditingController();
     _model.textFieldFocusNode2 ??= FocusNode();
   }
 
@@ -61,16 +62,16 @@ class _LoginWidgetState extends State<LoginWidget> {
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
         appBar: AppBar(
-          backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
+          backgroundColor: FlutterFlowTheme.of(context).primary,
           automaticallyImplyLeading: false,
           leading: FlutterFlowIconButton(
             borderColor: Colors.transparent,
             borderRadius: 30.0,
             borderWidth: 1.0,
             buttonSize: 60.0,
-            icon: Icon(
+            icon: const Icon(
               Icons.arrow_back_rounded,
-              color: FlutterFlowTheme.of(context).primaryText,
+              color: Colors.white,
               size: 30.0,
             ),
             onPressed: () async {
@@ -79,7 +80,7 @@ class _LoginWidgetState extends State<LoginWidget> {
           ),
           actions: const [],
           centerTitle: false,
-          elevation: 0.0,
+          elevation: 2.0,
         ),
         body: SafeArea(
           top: true,
@@ -138,7 +139,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   16.0, 12.0, 16.0, 0.0),
                               child: TextFormField(
-                                controller: _model.textController1,
+                                controller: _model.emailTextController,
                                 focusNode: _model.textFieldFocusNode1,
                                 autofocus: false,
                                 obscureText: false,
@@ -206,7 +207,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                       letterSpacing: 0.0,
                                       lineHeight: 3.0,
                                     ),
-                                validator: _model.textController1Validator
+                                validator: _model.emailTextControllerValidator
                                     .asValidator(context),
                               ),
                             ),
@@ -214,7 +215,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   16.0, 12.0, 16.0, 0.0),
                               child: TextFormField(
-                                controller: _model.textController2,
+                                controller: _model.passwordTextController,
                                 focusNode: _model.textFieldFocusNode2,
                                 autofocus: false,
                                 textCapitalization: TextCapitalization.none,
@@ -298,7 +299,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                                       letterSpacing: 0.0,
                                       lineHeight: 3.0,
                                     ),
-                                validator: _model.textController2Validator
+                                validator: _model
+                                    .passwordTextControllerValidator
                                     .asValidator(context),
                               ),
                             ),
@@ -315,7 +317,18 @@ class _LoginWidgetState extends State<LoginWidget> {
                           16.0, 12.0, 16.0, 24.0),
                       child: FFButtonWidget(
                         onPressed: () async {
-                          context.pushNamed('homescreen');
+                          GoRouter.of(context).prepareAuthEvent();
+
+                          final user = await authManager.signInWithEmail(
+                            context,
+                            _model.emailTextController.text,
+                            _model.passwordTextController.text,
+                          );
+                          if (user == null) {
+                            return;
+                          }
+
+                          context.pushNamedAuth('HabitHome', context.mounted);
                         },
                         text: 'Login',
                         options: FFButtonOptions(

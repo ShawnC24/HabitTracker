@@ -6,14 +6,14 @@ import 'package:flutter/material.dart';
 class AddahabitModel extends FlutterFlowModel<AddahabitWidget> {
   ///  State fields for stateful widgets in this page.
 
-  // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode1;
-  TextEditingController? textController1;
-  String? Function(BuildContext, String?)? textController1Validator;
-  // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode2;
-  TextEditingController? textController2;
-  String? Function(BuildContext, String?)? textController2Validator;
+  // State field(s) for name widget.
+  FocusNode? nameFocusNode;
+  TextEditingController? nameTextController;
+  String? Function(BuildContext, String?)? nameTextControllerValidator;
+  // State field(s) for description widget.
+  FocusNode? descriptionFocusNode;
+  TextEditingController? descriptionTextController;
+  String? Function(BuildContext, String?)? descriptionTextControllerValidator;
   // State field(s) for ChoiceChips widget.
   FormFieldController<List<String>>? choiceChipsValueController;
   String? get choiceChipsValue =>
@@ -34,10 +34,10 @@ class AddahabitModel extends FlutterFlowModel<AddahabitWidget> {
 
   @override
   void dispose() {
-    textFieldFocusNode1?.dispose();
-    textController1?.dispose();
+    nameFocusNode?.dispose();
+    nameTextController?.dispose();
 
-    textFieldFocusNode2?.dispose();
-    textController2?.dispose();
+    descriptionFocusNode?.dispose();
+    descriptionTextController?.dispose();
   }
 }

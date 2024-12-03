@@ -76,13 +76,13 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
                             width: 200.0,
                             height: 200.0,
                             decoration: BoxDecoration(
-                              color: const Color(0x33FFFFFF),
+                              color: const Color(0xBEFFFFFF),
                               borderRadius: BorderRadius.circular(100.0),
                             ),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(100.0),
                               child: Image.network(
-                                'https://images.unsplash.com/photo-1646995894726-eded6699abe4?w=500&h=500',
+                                'https://www.wellable.co/blog/wp-content/uploads/2024/01/Blog-Resource-1-1024x1024.png',
                                 width: 200.0,
                                 height: 200.0,
                                 fit: BoxFit.cover,

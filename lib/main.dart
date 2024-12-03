@@ -108,7 +108,7 @@ class NavBarPage extends StatefulWidget {
 
 /// This is the private State class that goes with NavBarPage.
 class _NavBarPageState extends State<NavBarPage> {
-  String _currentPageName = 'homescreen';
+  String _currentPageName = 'HabitHome';
   late Widget? _currentPage;
 
   @override
@@ -121,9 +121,9 @@ class _NavBarPageState extends State<NavBarPage> {
   @override
   Widget build(BuildContext context) {
     final tabs = {
-      'addahabit': const AddahabitWidget(),
-      'homescreen': const HomescreenWidget(),
       'socialPage': const SocialPageWidget(),
+      'HabitHome': const HabitHomeWidget(),
+      'settings': const SettingsWidget(),
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
 
@@ -144,7 +144,7 @@ class _NavBarPageState extends State<NavBarPage> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.note_add_rounded,
+              Icons.people,
             ),
             label: '',
             tooltip: '',
@@ -158,9 +158,9 @@ class _NavBarPageState extends State<NavBarPage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.people,
+              Icons.display_settings_outlined,
             ),
-            label: '',
+            label: 'settings',
             tooltip: '',
           )
         ],

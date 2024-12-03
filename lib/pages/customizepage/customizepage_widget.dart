@@ -25,15 +25,7 @@ class _CustomizepageWidgetState extends State<CustomizepageWidget> {
     super.initState();
     _model = createModel(context, () => CustomizepageModel());
 
-    _model.textController1 ??= TextEditingController();
-    _model.textFieldFocusNode1 ??= FocusNode();
-
-    _model.textController2 ??= TextEditingController();
-    _model.textFieldFocusNode2 ??= FocusNode();
-
-    _model.switchValue1 = true;
-    _model.switchValue2 = true;
-    _model.switchValue3 = true;
+    _model.switchValue = true;
   }
 
   @override
@@ -91,145 +83,6 @@ class _CustomizepageWidgetState extends State<CustomizepageWidget> {
                       color: FlutterFlowTheme.of(context).primaryBackground,
                       borderRadius: BorderRadius.circular(16.0),
                     ),
-                    child: Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(
-                          20.0, 20.0, 20.0, 20.0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            'Basic Settings',
-                            style: FlutterFlowTheme.of(context)
-                                .headlineSmall
-                                .override(
-                                  fontFamily: 'Outfit',
-                                  letterSpacing: 0.0,
-                                ),
-                          ),
-                          TextFormField(
-                            controller: _model.textController1,
-                            focusNode: _model.textFieldFocusNode1,
-                            autofocus: false,
-                            obscureText: false,
-                            decoration: InputDecoration(
-                              labelText: 'Habit Name',
-                              labelStyle: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Plus Jakarta Sans',
-                                    letterSpacing: 0.0,
-                                  ),
-                              hintStyle: FlutterFlowTheme.of(context)
-                                  .bodyLarge
-                                  .override(
-                                    fontFamily: 'Plus Jakarta Sans',
-                                    letterSpacing: 0.0,
-                                  ),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: FlutterFlowTheme.of(context).alternate,
-                                  width: 1.0,
-                                ),
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                  color: Color(0x00000000),
-                                  width: 1.0,
-                                ),
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              errorBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                  color: Color(0x00000000),
-                                  width: 1.0,
-                                ),
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              focusedErrorBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                  color: Color(0x00000000),
-                                  width: 1.0,
-                                ),
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              filled: true,
-                              fillColor: FlutterFlowTheme.of(context)
-                                  .secondaryBackground,
-                            ),
-                            style:
-                                FlutterFlowTheme.of(context).bodyLarge.override(
-                                      fontFamily: 'Plus Jakarta Sans',
-                                      letterSpacing: 0.0,
-                                    ),
-                            minLines: 1,
-                            validator: _model.textController1Validator
-                                .asValidator(context),
-                          ),
-                          TextFormField(
-                            controller: _model.textController2,
-                            focusNode: _model.textFieldFocusNode2,
-                            autofocus: false,
-                            obscureText: false,
-                            decoration: InputDecoration(
-                              labelText: 'Description',
-                              labelStyle: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Plus Jakarta Sans',
-                                    letterSpacing: 0.0,
-                                  ),
-                              hintStyle: FlutterFlowTheme.of(context)
-                                  .bodyLarge
-                                  .override(
-                                    fontFamily: 'Plus Jakarta Sans',
-                                    letterSpacing: 0.0,
-                                  ),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: FlutterFlowTheme.of(context).alternate,
-                                  width: 1.0,
-                                ),
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                  color: Color(0x00000000),
-                                  width: 1.0,
-                                ),
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              errorBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                  color: Color(0x00000000),
-                                  width: 1.0,
-                                ),
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              focusedErrorBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                  color: Color(0x00000000),
-                                  width: 1.0,
-                                ),
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              filled: true,
-                              fillColor: FlutterFlowTheme.of(context)
-                                  .secondaryBackground,
-                            ),
-                            style:
-                                FlutterFlowTheme.of(context).bodyLarge.override(
-                                      fontFamily: 'Plus Jakarta Sans',
-                                      letterSpacing: 0.0,
-                                    ),
-                            maxLines: 3,
-                            minLines: 1,
-                            validator: _model.textController2Validator
-                                .asValidator(context),
-                          ),
-                        ].divide(const SizedBox(height: 16.0)),
-                      ),
-                    ),
                   ),
                   Container(
                     width: MediaQuery.sizeOf(context).width * 1.0,
@@ -274,16 +127,25 @@ class _CustomizepageWidgetState extends State<CustomizepageWidget> {
                                 child: Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       8.0, 16.0, 8.0, 16.0),
-                                  child: Text(
-                                    'Pages',
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: 'Plus Jakarta Sans',
-                                          color: FlutterFlowTheme.of(context)
-                                              .primary,
-                                          letterSpacing: 0.0,
-                                        ),
+                                  child: InkWell(
+                                    splashColor: Colors.transparent,
+                                    focusColor: Colors.transparent,
+                                    hoverColor: Colors.transparent,
+                                    highlightColor: Colors.transparent,
+                                    onTap: () async {
+                                      Navigator.pop(context);
+                                    },
+                                    child: Text(
+                                      'Pages',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Plus Jakarta Sans',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primary,
+                                            letterSpacing: 0.0,
+                                          ),
+                                    ),
                                   ),
                                 ),
                               ),
@@ -383,10 +245,10 @@ class _CustomizepageWidgetState extends State<CustomizepageWidget> {
                                     ),
                               ),
                               Switch(
-                                value: _model.switchValue1!,
+                                value: _model.switchValue!,
                                 onChanged: (newValue) async {
                                   safeSetState(
-                                      () => _model.switchValue1 = newValue);
+                                      () => _model.switchValue = newValue);
                                 },
                                 activeColor:
                                     FlutterFlowTheme.of(context).primary,
@@ -452,84 +314,6 @@ class _CustomizepageWidgetState extends State<CustomizepageWidget> {
                     decoration: BoxDecoration(
                       color: FlutterFlowTheme.of(context).primaryBackground,
                       borderRadius: BorderRadius.circular(16.0),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(
-                          20.0, 20.0, 20.0, 20.0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            'Tracking Options',
-                            style: FlutterFlowTheme.of(context)
-                                .headlineSmall
-                                .override(
-                                  fontFamily: 'Outfit',
-                                  letterSpacing: 0.0,
-                                ),
-                          ),
-                          Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Allow Notes',
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyLarge
-                                    .override(
-                                      fontFamily: 'Plus Jakarta Sans',
-                                      letterSpacing: 0.0,
-                                    ),
-                              ),
-                              Switch(
-                                value: _model.switchValue2!,
-                                onChanged: (newValue) async {
-                                  safeSetState(
-                                      () => _model.switchValue2 = newValue);
-                                },
-                                activeColor:
-                                    FlutterFlowTheme.of(context).primary,
-                                activeTrackColor:
-                                    FlutterFlowTheme.of(context).secondaryText,
-                                inactiveTrackColor:
-                                    FlutterFlowTheme.of(context).secondaryText,
-                                inactiveThumbColor:
-                                    FlutterFlowTheme.of(context).secondaryText,
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Track Reading Time',
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyLarge
-                                    .override(
-                                      fontFamily: 'Plus Jakarta Sans',
-                                      letterSpacing: 0.0,
-                                    ),
-                              ),
-                              Switch(
-                                value: _model.switchValue3!,
-                                onChanged: (newValue) async {
-                                  safeSetState(
-                                      () => _model.switchValue3 = newValue);
-                                },
-                                activeColor:
-                                    FlutterFlowTheme.of(context).primary,
-                                activeTrackColor:
-                                    FlutterFlowTheme.of(context).secondaryText,
-                                inactiveTrackColor:
-                                    FlutterFlowTheme.of(context).secondaryText,
-                                inactiveThumbColor:
-                                    FlutterFlowTheme.of(context).secondaryText,
-                              ),
-                            ],
-                          ),
-                        ].divide(const SizedBox(height: 16.0)),
-                      ),
                     ),
                   ),
                   FFButtonWidget(
