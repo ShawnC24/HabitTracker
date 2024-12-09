@@ -1,7 +1,9 @@
+import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'welcome_model.dart';
 export 'welcome_model.dart';
 
@@ -14,15 +16,33 @@ class WelcomeWidget extends StatefulWidget {
   State<WelcomeWidget> createState() => _WelcomeWidgetState();
 }
 
-class _WelcomeWidgetState extends State<WelcomeWidget> {
+class _WelcomeWidgetState extends State<WelcomeWidget>
+    with TickerProviderStateMixin {
   late WelcomeModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  final animationsMap = <String, AnimationInfo>{};
 
   @override
   void initState() {
     super.initState();
     _model = createModel(context, () => WelcomeModel());
+
+    animationsMap.addAll({
+      'imageOnPageLoadAnimation': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 600.0.ms,
+            begin: const Offset(0.0, 0.0),
+            end: const Offset(0.0, 0.0),
+          ),
+        ],
+      ),
+    });
   }
 
   @override
@@ -87,7 +107,8 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
                                 height: 200.0,
                                 fit: BoxFit.cover,
                               ),
-                            ),
+                            ).animateOnPageLoad(
+                                animationsMap['imageOnPageLoadAnimation']!),
                           ),
                         ),
                       ),
@@ -103,7 +124,7 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
                               style: FlutterFlowTheme.of(context)
                                   .displayLarge
                                   .override(
-                                    fontFamily: 'Outfit',
+                                    fontFamily: 'Readex Pro',
                                     color: Colors.white,
                                     fontSize: 35.0,
                                     letterSpacing: 0.0,
@@ -116,7 +137,7 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
                               style: FlutterFlowTheme.of(context)
                                   .headlineSmall
                                   .override(
-                                    fontFamily: 'Outfit',
+                                    fontFamily: 'Readex Pro',
                                     color: const Color(0xFFE0E0E0),
                                     letterSpacing: 0.0,
                                   ),
@@ -148,7 +169,7 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
                                   textStyle: FlutterFlowTheme.of(context)
                                       .titleMedium
                                       .override(
-                                        fontFamily: 'Plus Jakarta Sans',
+                                        fontFamily: 'Inter',
                                         color: FlutterFlowTheme.of(context)
                                             .primary,
                                         letterSpacing: 0.0,
@@ -173,7 +194,7 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
                                   textStyle: FlutterFlowTheme.of(context)
                                       .titleMedium
                                       .override(
-                                        fontFamily: 'Plus Jakarta Sans',
+                                        fontFamily: 'Inter',
                                         color: Colors.white,
                                         letterSpacing: 0.0,
                                       ),
@@ -197,7 +218,7 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
                           textAlign: TextAlign.center,
                           style:
                               FlutterFlowTheme.of(context).bodyMedium.override(
-                                    fontFamily: 'Plus Jakarta Sans',
+                                    fontFamily: 'Inter',
                                     color: Colors.white,
                                     letterSpacing: 0.0,
                                   ),

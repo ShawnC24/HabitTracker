@@ -121,9 +121,9 @@ class _NavBarPageState extends State<NavBarPage> {
   @override
   Widget build(BuildContext context) {
     final tabs = {
-      'socialPage': const SocialPageWidget(),
       'HabitHome': const HabitHomeWidget(),
-      'settings': const SettingsWidget(),
+      'friendList': const FriendListWidget(),
+      'profile': const ProfileWidget(),
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
 
@@ -144,13 +144,6 @@ class _NavBarPageState extends State<NavBarPage> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.people,
-            ),
-            label: '',
-            tooltip: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
               Icons.home,
             ),
             label: '',
@@ -158,9 +151,17 @@ class _NavBarPageState extends State<NavBarPage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.display_settings_outlined,
+              Icons.groups_2_sharp,
             ),
-            label: 'settings',
+            label: '',
+            tooltip: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.account_circle_outlined,
+              size: 24.0,
+            ),
+            label: '__',
             tooltip: '',
           )
         ],

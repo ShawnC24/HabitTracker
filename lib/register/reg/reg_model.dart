@@ -5,6 +5,10 @@ import 'package:flutter/material.dart';
 class RegModel extends FlutterFlowModel<RegWidget> {
   ///  State fields for stateful widgets in this page.
 
+  // State field(s) for TextField widget.
+  FocusNode? textFieldFocusNode;
+  TextEditingController? textController1;
+  String? Function(BuildContext, String?)? textController1Validator;
   // State field(s) for emailAddress widget.
   FocusNode? emailAddressFocusNode;
   TextEditingController? emailAddressTextController;
@@ -29,6 +33,9 @@ class RegModel extends FlutterFlowModel<RegWidget> {
 
   @override
   void dispose() {
+    textFieldFocusNode?.dispose();
+    textController1?.dispose();
+
     emailAddressFocusNode?.dispose();
     emailAddressTextController?.dispose();
 

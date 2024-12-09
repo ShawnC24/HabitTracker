@@ -67,7 +67,7 @@ class _HabitTrackerWidgetState extends State<HabitTrackerWidget> {
                   Text(
                     'Daily mindfulness practice - 20 minutes',
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
-                          fontFamily: 'Plus Jakarta Sans',
+                          fontFamily: 'Inter',
                           color: FlutterFlowTheme.of(context).secondaryText,
                           letterSpacing: 0.0,
                         ),
@@ -75,7 +75,7 @@ class _HabitTrackerWidgetState extends State<HabitTrackerWidget> {
                   Text(
                     'Morning Meditation',
                     style: FlutterFlowTheme.of(context).titleMedium.override(
-                          fontFamily: 'Plus Jakarta Sans',
+                          fontFamily: 'Inter',
                           letterSpacing: 0.0,
                         ),
                   ),
@@ -98,7 +98,7 @@ class _HabitTrackerWidgetState extends State<HabitTrackerWidget> {
                             style: FlutterFlowTheme.of(context)
                                 .labelSmall
                                 .override(
-                                  fontFamily: 'Outfit',
+                                  fontFamily: 'Inter',
                                   color: FlutterFlowTheme.of(context).info,
                                   letterSpacing: 0.0,
                                 ),
@@ -119,7 +119,7 @@ class _HabitTrackerWidgetState extends State<HabitTrackerWidget> {
                       Text(
                         'Progress',
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
-                              fontFamily: 'Plus Jakarta Sans',
+                              fontFamily: 'Inter',
                               letterSpacing: 0.0,
                             ),
                       ),
@@ -129,7 +129,7 @@ class _HabitTrackerWidgetState extends State<HabitTrackerWidget> {
                           formatType: FormatType.percent,
                         ),
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
-                              fontFamily: 'Plus Jakarta Sans',
+                              fontFamily: 'Inter',
                               color: FlutterFlowTheme.of(context).primary,
                               letterSpacing: 0.0,
                             ),

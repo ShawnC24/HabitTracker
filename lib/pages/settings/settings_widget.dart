@@ -1,4 +1,3 @@
-import '/auth/firebase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -59,7 +58,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
           title: Text(
             'Settings',
             style: FlutterFlowTheme.of(context).headlineMedium.override(
-                  fontFamily: 'Outfit',
+                  fontFamily: 'Readex Pro',
                   letterSpacing: 0.0,
                 ),
           ),
@@ -98,7 +97,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                             style: FlutterFlowTheme.of(context)
                                 .titleMedium
                                 .override(
-                                  fontFamily: 'Plus Jakarta Sans',
+                                  fontFamily: 'Inter',
                                   letterSpacing: 0.0,
                                 ),
                           ),
@@ -134,7 +133,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                                         style: FlutterFlowTheme.of(context)
                                             .bodyLarge
                                             .override(
-                                              fontFamily: 'Plus Jakarta Sans',
+                                              fontFamily: 'Inter',
                                               letterSpacing: 0.0,
                                             ),
                                       ),
@@ -145,7 +144,8 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                                     onChanged: (newValue) async {
                                       safeSetState(
                                           () => _model.switchValue = newValue);
-                                      if (newValue) {
+
+                                      if (!newValue) {
                                         setDarkModeSetting(
                                             context, ThemeMode.dark);
                                       }
@@ -163,102 +163,6 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                                             .secondaryText,
                                   ),
                                 ],
-                              ),
-                            ),
-                          ),
-                        ].divide(const SizedBox(height: 16.0)),
-                      ),
-                    ),
-                  ),
-                ),
-                Material(
-                  color: Colors.transparent,
-                  elevation: 2.0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16.0),
-                  ),
-                  child: Container(
-                    width: MediaQuery.sizeOf(context).width * 1.0,
-                    decoration: BoxDecoration(
-                      color: FlutterFlowTheme.of(context).secondaryBackground,
-                      borderRadius: BorderRadius.circular(16.0),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(
-                          20.0, 20.0, 20.0, 20.0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            'Account',
-                            style: FlutterFlowTheme.of(context)
-                                .titleMedium
-                                .override(
-                                  fontFamily: 'Plus Jakarta Sans',
-                                  letterSpacing: 0.0,
-                                ),
-                          ),
-                          Container(
-                            width: MediaQuery.sizeOf(context).width * 1.0,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(8.0),
-                              border: Border.all(
-                                color: const Color(0xFFE0E0E0),
-                                width: 1.0,
-                              ),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  16.0, 16.0, 16.0, 16.0),
-                              child: InkWell(
-                                splashColor: Colors.transparent,
-                                focusColor: Colors.transparent,
-                                hoverColor: Colors.transparent,
-                                highlightColor: Colors.transparent,
-                                onTap: () async {
-                                  GoRouter.of(context).prepareAuthEvent();
-                                  await authManager.signOut();
-                                  GoRouter.of(context).clearRedirectLocation();
-
-                                  context.goNamedAuth(
-                                      'Welcome', context.mounted);
-                                },
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Icon(
-                                          Icons.logout,
-                                          color: FlutterFlowTheme.of(context)
-                                              .error,
-                                          size: 24.0,
-                                        ),
-                                        Text(
-                                          'Logout',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyLarge
-                                              .override(
-                                                fontFamily: 'Plus Jakarta Sans',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .error,
-                                                letterSpacing: 0.0,
-                                              ),
-                                        ),
-                                      ].divide(const SizedBox(width: 12.0)),
-                                    ),
-                                    Icon(
-                                      Icons.chevron_right,
-                                      color: FlutterFlowTheme.of(context).error,
-                                      size: 24.0,
-                                    ),
-                                  ],
-                                ),
                               ),
                             ),
                           ),

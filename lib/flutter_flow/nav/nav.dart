@@ -98,33 +98,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => const LoginWidget(),
         ),
         FFRoute(
-          name: 'presetSEttings',
-          path: '/presetSEttings',
-          builder: (context, params) => const PresetSEttingsWidget(),
-        ),
-        FFRoute(
-          name: 'presetSEttingsCopy',
-          path: '/presetSEttingsCopy',
-          builder: (context, params) => const PresetSEttingsCopyWidget(),
-        ),
-        FFRoute(
-          name: 'customizepage',
-          path: '/customizepage',
-          builder: (context, params) => const CustomizepageWidget(),
-        ),
-        FFRoute(
-          name: 'walkdogcustomization',
-          path: '/walkdogcustomization',
-          builder: (context, params) => const WalkdogcustomizationWidget(),
-        ),
-        FFRoute(
-          name: 'socialPage',
-          path: '/socialPage',
-          builder: (context, params) => params.isEmpty
-              ? const NavBarPage(initialPage: 'socialPage')
-              : const SocialPageWidget(),
-        ),
-        FFRoute(
           name: 'Welcome',
           path: '/welcome',
           builder: (context, params) => const WelcomeWidget(),
@@ -147,9 +120,26 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'settings',
           path: '/settings',
+          builder: (context, params) => const SettingsWidget(),
+        ),
+        FFRoute(
+          name: 'profile',
+          path: '/profile',
           builder: (context, params) => params.isEmpty
-              ? const NavBarPage(initialPage: 'settings')
-              : const SettingsWidget(),
+              ? const NavBarPage(initialPage: 'profile')
+              : const ProfileWidget(),
+        ),
+        FFRoute(
+          name: 'addFriend',
+          path: '/addFriend',
+          builder: (context, params) => const AddFriendWidget(),
+        ),
+        FFRoute(
+          name: 'friendList',
+          path: '/friendList',
+          builder: (context, params) => params.isEmpty
+              ? const NavBarPage(initialPage: 'friendList')
+              : const FriendListWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

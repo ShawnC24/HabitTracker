@@ -35,11 +35,29 @@ class HabitsRecord extends FirestoreRecord {
   DateTime? get reminderTime => _reminderTime;
   bool hasReminderTime() => _reminderTime != null;
 
+  // "isCompleted" field.
+  bool? _isCompleted;
+  bool get isCompleted => _isCompleted ?? false;
+  bool hasIsCompleted() => _isCompleted != null;
+
+  // "iconSymbol" field.
+  String? _iconSymbol;
+  String get iconSymbol => _iconSymbol ?? '';
+  bool hasIconSymbol() => _iconSymbol != null;
+
+  // "units" field.
+  String? _units;
+  String get units => _units ?? '';
+  bool hasUnits() => _units != null;
+
   void _initializeFields() {
     _name = snapshotData['name'] as String?;
     _description = snapshotData['description'] as String?;
     _frequency = snapshotData['frequency'] as String?;
     _reminderTime = snapshotData['reminderTime'] as DateTime?;
+    _isCompleted = snapshotData['isCompleted'] as bool?;
+    _iconSymbol = snapshotData['iconSymbol'] as String?;
+    _units = snapshotData['units'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -80,6 +98,9 @@ Map<String, dynamic> createHabitsRecordData({
   String? description,
   String? frequency,
   DateTime? reminderTime,
+  bool? isCompleted,
+  String? iconSymbol,
+  String? units,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -87,6 +108,9 @@ Map<String, dynamic> createHabitsRecordData({
       'description': description,
       'frequency': frequency,
       'reminderTime': reminderTime,
+      'isCompleted': isCompleted,
+      'iconSymbol': iconSymbol,
+      'units': units,
     }.withoutNulls,
   );
 
@@ -101,12 +125,22 @@ class HabitsRecordDocumentEquality implements Equality<HabitsRecord> {
     return e1?.name == e2?.name &&
         e1?.description == e2?.description &&
         e1?.frequency == e2?.frequency &&
-        e1?.reminderTime == e2?.reminderTime;
+        e1?.reminderTime == e2?.reminderTime &&
+        e1?.isCompleted == e2?.isCompleted &&
+        e1?.iconSymbol == e2?.iconSymbol &&
+        e1?.units == e2?.units;
   }
 
   @override
-  int hash(HabitsRecord? e) => const ListEquality()
-      .hash([e?.name, e?.description, e?.frequency, e?.reminderTime]);
+  int hash(HabitsRecord? e) => const ListEquality().hash([
+        e?.name,
+        e?.description,
+        e?.frequency,
+        e?.reminderTime,
+        e?.isCompleted,
+        e?.iconSymbol,
+        e?.units
+      ]);
 
   @override
   bool isValidKey(Object? o) => o is HabitsRecord;

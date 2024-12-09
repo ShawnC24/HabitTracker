@@ -1,4 +1,5 @@
 import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -24,6 +25,9 @@ class _RegWidgetState extends State<RegWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => RegModel());
+
+    _model.textController1 ??= TextEditingController();
+    _model.textFieldFocusNode ??= FocusNode();
 
     _model.emailAddressTextController ??= TextEditingController();
     _model.emailAddressFocusNode ??= FocusNode();
@@ -111,7 +115,7 @@ class _RegWidgetState extends State<RegWidget> {
                               style: FlutterFlowTheme.of(context)
                                   .displaySmall
                                   .override(
-                                    fontFamily: 'Outfit',
+                                    fontFamily: 'Readex Pro',
                                     letterSpacing: 0.0,
                                   ),
                             ),
@@ -130,7 +134,7 @@ class _RegWidgetState extends State<RegWidget> {
                                   style: FlutterFlowTheme.of(context)
                                       .displaySmall
                                       .override(
-                                        fontFamily: 'Outfit',
+                                        fontFamily: 'Readex Pro',
                                         letterSpacing: 0.0,
                                       ),
                                 ),
@@ -142,9 +146,81 @@ class _RegWidgetState extends State<RegWidget> {
                                     style: FlutterFlowTheme.of(context)
                                         .labelMedium
                                         .override(
-                                          fontFamily: 'Outfit',
+                                          fontFamily: 'Inter',
                                           letterSpacing: 0.0,
                                         ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: double.infinity,
+                                  child: TextFormField(
+                                    controller: _model.textController1,
+                                    focusNode: _model.textFieldFocusNode,
+                                    autofocus: false,
+                                    obscureText: false,
+                                    decoration: InputDecoration(
+                                      isDense: true,
+                                      labelStyle: FlutterFlowTheme.of(context)
+                                          .labelMedium
+                                          .override(
+                                            fontFamily: 'Inter',
+                                            letterSpacing: 0.0,
+                                          ),
+                                      hintText: 'Full Name',
+                                      hintStyle: FlutterFlowTheme.of(context)
+                                          .labelMedium
+                                          .override(
+                                            fontFamily: 'Inter',
+                                            letterSpacing: 0.0,
+                                          ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                          color: Color(0x00000000),
+                                          width: 1.0,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                          color: Color(0x00000000),
+                                          width: 1.0,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                      ),
+                                      errorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context)
+                                              .error,
+                                          width: 1.0,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                      ),
+                                      focusedErrorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context)
+                                              .error,
+                                          width: 1.0,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                      ),
+                                      filled: true,
+                                      fillColor: FlutterFlowTheme.of(context)
+                                          .secondaryBackground,
+                                    ),
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Inter',
+                                          letterSpacing: 0.0,
+                                        ),
+                                    cursorColor: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                    validator: _model.textController1Validator
+                                        .asValidator(context),
                                   ),
                                 ),
                                 Padding(
@@ -164,7 +240,7 @@ class _RegWidgetState extends State<RegWidget> {
                                         labelStyle: FlutterFlowTheme.of(context)
                                             .labelMedium
                                             .override(
-                                              fontFamily: 'Outfit',
+                                              fontFamily: 'Inter',
                                               letterSpacing: 0.0,
                                             ),
                                         alignLabelWithHint: false,
@@ -211,7 +287,7 @@ class _RegWidgetState extends State<RegWidget> {
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .override(
-                                            fontFamily: 'Plus Jakarta Sans',
+                                            fontFamily: 'Inter',
                                             letterSpacing: 0.0,
                                           ),
                                       keyboardType: TextInputType.emailAddress,
@@ -237,7 +313,7 @@ class _RegWidgetState extends State<RegWidget> {
                                         labelStyle: FlutterFlowTheme.of(context)
                                             .labelMedium
                                             .override(
-                                              fontFamily: 'Outfit',
+                                              fontFamily: 'Inter',
                                               letterSpacing: 0.0,
                                             ),
                                         enabledBorder: OutlineInputBorder(
@@ -299,7 +375,7 @@ class _RegWidgetState extends State<RegWidget> {
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .override(
-                                            fontFamily: 'Plus Jakarta Sans',
+                                            fontFamily: 'Inter',
                                             letterSpacing: 0.0,
                                           ),
                                       validator: _model
@@ -327,7 +403,7 @@ class _RegWidgetState extends State<RegWidget> {
                                         labelStyle: FlutterFlowTheme.of(context)
                                             .labelMedium
                                             .override(
-                                              fontFamily: 'Outfit',
+                                              fontFamily: 'Inter',
                                               letterSpacing: 0.0,
                                             ),
                                         enabledBorder: OutlineInputBorder(
@@ -391,7 +467,7 @@ class _RegWidgetState extends State<RegWidget> {
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .override(
-                                            fontFamily: 'Plus Jakarta Sans',
+                                            fontFamily: 'Inter',
                                             letterSpacing: 0.0,
                                           ),
                                       minLines: 1,
@@ -431,6 +507,13 @@ class _RegWidgetState extends State<RegWidget> {
                                         return;
                                       }
 
+                                      await UsersRecord.collection
+                                          .doc(user.uid)
+                                          .update(createUsersRecordData(
+                                            displayName:
+                                                _model.textController1.text,
+                                          ));
+
                                       context.goNamedAuth(
                                           'HabitHome', context.mounted);
                                     },
@@ -448,7 +531,7 @@ class _RegWidgetState extends State<RegWidget> {
                                       textStyle: FlutterFlowTheme.of(context)
                                           .titleSmall
                                           .override(
-                                            fontFamily: 'Plus Jakarta Sans',
+                                            fontFamily: 'Inter',
                                             color: Colors.white,
                                             letterSpacing: 0.0,
                                           ),
@@ -488,8 +571,7 @@ class _RegWidgetState extends State<RegWidget> {
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
-                                                  fontFamily:
-                                                      'Plus Jakarta Sans',
+                                                  fontFamily: 'Inter',
                                                   color: FlutterFlowTheme.of(
                                                           context)
                                                       .primary,
@@ -502,7 +584,7 @@ class _RegWidgetState extends State<RegWidget> {
                                         style: FlutterFlowTheme.of(context)
                                             .labelLarge
                                             .override(
-                                              fontFamily: 'Outfit',
+                                              fontFamily: 'Inter',
                                               letterSpacing: 0.0,
                                             ),
                                       ),

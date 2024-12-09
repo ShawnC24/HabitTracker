@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:collection/collection.dart';
 
 import '/backend/schema/util/firestore_util.dart';
+import '/backend/schema/util/schema_util.dart';
 
 import 'index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -45,6 +46,16 @@ class UsersRecord extends FirestoreRecord {
   String get phoneNumber => _phoneNumber ?? '';
   bool hasPhoneNumber() => _phoneNumber != null;
 
+  // "friends" field.
+  List<DocumentReference>? _friends;
+  List<DocumentReference> get friends => _friends ?? const [];
+  bool hasFriends() => _friends != null;
+
+  // "friendRequest" field.
+  List<DocumentReference>? _friendRequest;
+  List<DocumentReference> get friendRequest => _friendRequest ?? const [];
+  bool hasFriendRequest() => _friendRequest != null;
+
   void _initializeFields() {
     _email = snapshotData['email'] as String?;
     _displayName = snapshotData['display_name'] as String?;
@@ -52,6 +63,8 @@ class UsersRecord extends FirestoreRecord {
     _uid = snapshotData['uid'] as String?;
     _createdTime = snapshotData['created_time'] as DateTime?;
     _phoneNumber = snapshotData['phone_number'] as String?;
+    _friends = getDataList(snapshotData['friends']);
+    _friendRequest = getDataList(snapshotData['friendRequest']);
   }
 
   static CollectionReference get collection =>
@@ -114,12 +127,15 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
 
   @override
   bool equals(UsersRecord? e1, UsersRecord? e2) {
+    const listEquality = ListEquality();
     return e1?.email == e2?.email &&
         e1?.displayName == e2?.displayName &&
         e1?.photoUrl == e2?.photoUrl &&
         e1?.uid == e2?.uid &&
         e1?.createdTime == e2?.createdTime &&
-        e1?.phoneNumber == e2?.phoneNumber;
+        e1?.phoneNumber == e2?.phoneNumber &&
+        listEquality.equals(e1?.friends, e2?.friends) &&
+        listEquality.equals(e1?.friendRequest, e2?.friendRequest);
   }
 
   @override
@@ -129,7 +145,9 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.photoUrl,
         e?.uid,
         e?.createdTime,
-        e?.phoneNumber
+        e?.phoneNumber,
+        e?.friends,
+        e?.friendRequest
       ]);
 
   @override

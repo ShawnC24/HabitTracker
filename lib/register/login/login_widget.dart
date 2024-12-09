@@ -116,7 +116,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                 style: FlutterFlowTheme.of(context)
                                     .displayMedium
                                     .override(
-                                      fontFamily: 'Outfit',
+                                      fontFamily: 'Readex Pro',
                                       letterSpacing: 0.0,
                                     ),
                               ),
@@ -125,12 +125,12 @@ class _LoginWidgetState extends State<LoginWidget> {
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   12.0, 0.0, 0.0, 12.0),
                               child: Text(
-                                'Access your wonderful recipes by loggin in below.',
+                                'Access your habits by logging in below.',
                                 textAlign: TextAlign.start,
                                 style: FlutterFlowTheme.of(context)
                                     .labelLarge
                                     .override(
-                                      fontFamily: 'Outfit',
+                                      fontFamily: 'Inter',
                                       letterSpacing: 0.0,
                                     ),
                               ),
@@ -148,7 +148,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                   labelStyle: FlutterFlowTheme.of(context)
                                       .labelLarge
                                       .override(
-                                        fontFamily: 'Outfit',
+                                        fontFamily: 'Inter',
                                         letterSpacing: 0.0,
                                       ),
                                   enabledBorder: UnderlineInputBorder(
@@ -203,7 +203,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                 style: FlutterFlowTheme.of(context)
                                     .bodyLarge
                                     .override(
-                                      fontFamily: 'Plus Jakarta Sans',
+                                      fontFamily: 'Inter',
                                       letterSpacing: 0.0,
                                       lineHeight: 3.0,
                                     ),
@@ -225,7 +225,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                   labelStyle: FlutterFlowTheme.of(context)
                                       .labelLarge
                                       .override(
-                                        fontFamily: 'Outfit',
+                                        fontFamily: 'Inter',
                                         letterSpacing: 0.0,
                                       ),
                                   enabledBorder: UnderlineInputBorder(
@@ -295,7 +295,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                 style: FlutterFlowTheme.of(context)
                                     .bodyLarge
                                     .override(
-                                      fontFamily: 'Plus Jakarta Sans',
+                                      fontFamily: 'Inter',
                                       letterSpacing: 0.0,
                                       lineHeight: 3.0,
                                     ),
@@ -341,7 +341,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                           color: FlutterFlowTheme.of(context).primaryText,
                           textStyle:
                               FlutterFlowTheme.of(context).titleMedium.override(
-                                    fontFamily: 'Plus Jakarta Sans',
+                                    fontFamily: 'Inter',
                                     color: FlutterFlowTheme.of(context)
                                         .secondaryBackground,
                                     letterSpacing: 0.0,

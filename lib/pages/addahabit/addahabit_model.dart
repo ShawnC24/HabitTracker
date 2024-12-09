@@ -14,6 +14,10 @@ class AddahabitModel extends FlutterFlowModel<AddahabitWidget> {
   FocusNode? descriptionFocusNode;
   TextEditingController? descriptionTextController;
   String? Function(BuildContext, String?)? descriptionTextControllerValidator;
+  // State field(s) for Counter widget.
+  FocusNode? counterFocusNode;
+  TextEditingController? counterTextController;
+  String? Function(BuildContext, String?)? counterTextControllerValidator;
   // State field(s) for ChoiceChips widget.
   FormFieldController<List<String>>? choiceChipsValueController;
   String? get choiceChipsValue =>
@@ -39,5 +43,8 @@ class AddahabitModel extends FlutterFlowModel<AddahabitWidget> {
 
     descriptionFocusNode?.dispose();
     descriptionTextController?.dispose();
+
+    counterFocusNode?.dispose();
+    counterTextController?.dispose();
   }
 }

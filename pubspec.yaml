@@ -36,7 +36,6 @@ dependencies:
   cloud_firestore_web: 4.3.2
   collection: 1.18.0
   csslib: 0.17.3
-  easy_debounce: 2.0.1
   file_picker: 8.1.2
   firebase_auth: 5.3.1
   firebase_auth_platform_interface: 7.4.7
@@ -87,6 +86,7 @@ dependencies:
   path_provider_linux: 2.2.1
   path_provider_platform_interface: 2.1.2
   path_provider_windows: 2.3.0
+  percent_indicator: 4.2.2
   plugin_platform_interface: 2.1.8
   provider: 6.1.2
   rxdart: 0.27.7

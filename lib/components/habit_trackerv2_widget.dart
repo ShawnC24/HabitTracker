@@ -52,7 +52,7 @@ class _HabitTrackerv2WidgetState extends State<HabitTrackerv2Widget> {
               Text(
                 'Habit Title',
                 style: FlutterFlowTheme.of(context).headlineSmall.override(
-                      fontFamily: 'Outfit',
+                      fontFamily: 'Readex Pro',
                       color: FlutterFlowTheme.of(context).primaryText,
                       letterSpacing: 0.0,
                     ),
@@ -60,7 +60,7 @@ class _HabitTrackerv2WidgetState extends State<HabitTrackerv2Widget> {
               Text(
                 '[Progress]',
                 style: FlutterFlowTheme.of(context).bodyMedium.override(
-                      fontFamily: 'Plus Jakarta Sans',
+                      fontFamily: 'Inter',
                       color: FlutterFlowTheme.of(context).secondaryText,
                       letterSpacing: 0.0,
                     ),
@@ -84,7 +84,7 @@ class _HabitTrackerv2WidgetState extends State<HabitTrackerv2Widget> {
               Text(
                 '100%',
                 style: FlutterFlowTheme.of(context).bodyMedium.override(
-                      fontFamily: 'Plus Jakarta Sans',
+                      fontFamily: 'Inter',
                       color: FlutterFlowTheme.of(context).primaryText,
                       letterSpacing: 0.0,
                     ),

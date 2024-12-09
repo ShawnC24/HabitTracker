@@ -1,10 +1,12 @@
 import '/backend/backend.dart';
-import '/flutter_flow/flutter_flow_icon_button.dart';
+import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 import 'habit_home_model.dart';
 export 'habit_home_model.dart';
 
@@ -24,15 +26,40 @@ class HabitHomeWidget extends StatefulWidget {
   State<HabitHomeWidget> createState() => _HabitHomeWidgetState();
 }
 
-class _HabitHomeWidgetState extends State<HabitHomeWidget> {
+class _HabitHomeWidgetState extends State<HabitHomeWidget>
+    with TickerProviderStateMixin {
   late HabitHomeModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  final animationsMap = <String, AnimationInfo>{};
 
   @override
   void initState() {
     super.initState();
     _model = createModel(context, () => HabitHomeModel());
+
+    animationsMap.addAll({
+      'buttonOnActionTriggerAnimation': AnimationInfo(
+        trigger: AnimationTrigger.onActionTrigger,
+        applyInitialState: true,
+        effectsBuilder: () => [
+          ScaleEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 600.0.ms,
+            begin: const Offset(1.0, 1.0),
+            end: const Offset(1.0, 1.0),
+          ),
+        ],
+      ),
+    });
+    setupAnimations(
+      animationsMap.values.where((anim) =>
+          anim.trigger == AnimationTrigger.onActionTrigger ||
+          !anim.applyInitialState),
+      this,
+    );
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
@@ -57,23 +84,11 @@ class _HabitHomeWidgetState extends State<HabitHomeWidget> {
           title: Text(
             'My Habits',
             style: FlutterFlowTheme.of(context).headlineMedium.override(
-                  fontFamily: 'Outfit',
+                  fontFamily: 'Readex Pro',
                   letterSpacing: 0.0,
                 ),
           ),
-          actions: [
-            FlutterFlowIconButton(
-              buttonSize: 48.0,
-              icon: Icon(
-                Icons.notifications_none,
-                color: FlutterFlowTheme.of(context).primaryText,
-                size: 24.0,
-              ),
-              onPressed: () {
-                print('IconButton pressed ...');
-              },
-            ),
-          ],
+          actions: const [],
           centerTitle: false,
           elevation: 0.0,
         ),
@@ -112,7 +127,7 @@ class _HabitHomeWidgetState extends State<HabitHomeWidget> {
                                   style: FlutterFlowTheme.of(context)
                                       .titleLarge
                                       .override(
-                                        fontFamily: 'Outfit',
+                                        fontFamily: 'Inter',
                                         letterSpacing: 0.0,
                                       ),
                                 ),
@@ -121,7 +136,7 @@ class _HabitHomeWidgetState extends State<HabitHomeWidget> {
                                   style: FlutterFlowTheme.of(context)
                                       .bodyMedium
                                       .override(
-                                        fontFamily: 'Plus Jakarta Sans',
+                                        fontFamily: 'Inter',
                                         color: FlutterFlowTheme.of(context)
                                             .primary,
                                         letterSpacing: 0.0,
@@ -136,13 +151,16 @@ class _HabitHomeWidgetState extends State<HabitHomeWidget> {
                                 color: const Color(0xFFF0F0F0),
                                 borderRadius: BorderRadius.circular(4.0),
                               ),
-                              child: Container(
-                                width: MediaQuery.sizeOf(context).width * 0.6,
-                                height: 8.0,
-                                decoration: BoxDecoration(
-                                  color: FlutterFlowTheme.of(context).primary,
-                                  borderRadius: BorderRadius.circular(4.0),
-                                ),
+                              child: LinearPercentIndicator(
+                                percent: 0.8,
+                                width: MediaQuery.sizeOf(context).width * 1.0,
+                                lineHeight: 12.0,
+                                animation: true,
+                                animateFromLastPercent: true,
+                                progressColor: const Color(0xFF69AB68),
+                                backgroundColor:
+                                    FlutterFlowTheme.of(context).accent4,
+                                padding: EdgeInsets.zero,
                               ),
                             ),
                           ].divide(const SizedBox(height: 16.0)),
@@ -173,7 +191,7 @@ class _HabitHomeWidgetState extends State<HabitHomeWidget> {
                               style: FlutterFlowTheme.of(context)
                                   .titleLarge
                                   .override(
-                                    fontFamily: 'Outfit',
+                                    fontFamily: 'Inter',
                                     letterSpacing: 0.0,
                                   ),
                             ),
@@ -248,24 +266,19 @@ class _HabitHomeWidgetState extends State<HabitHomeWidget> {
                                                     FlutterFlowTheme.of(context)
                                                         .bodyLarge
                                                         .override(
-                                                          fontFamily:
-                                                              'Plus Jakarta Sans',
+                                                          fontFamily: 'Inter',
                                                           letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.w600,
                                                         ),
                                               ),
                                               Text(
-                                                valueOrDefault<String>(
-                                                  widget.habit?.frequency,
-                                                  '[frequency]',
-                                                ),
+                                                '15 minutes daily',
                                                 style:
                                                     FlutterFlowTheme.of(context)
                                                         .bodySmall
                                                         .override(
-                                                          fontFamily:
-                                                              'Plus Jakarta Sans',
+                                                          fontFamily: 'Inter',
                                                           color: FlutterFlowTheme
                                                                   .of(context)
                                                               .secondaryText,
@@ -329,8 +342,7 @@ class _HabitHomeWidgetState extends State<HabitHomeWidget> {
                                                   FlutterFlowTheme.of(context)
                                                       .bodyLarge
                                                       .override(
-                                                        fontFamily:
-                                                            'Plus Jakarta Sans',
+                                                        fontFamily: 'Inter',
                                                         letterSpacing: 0.0,
                                                         fontWeight:
                                                             FontWeight.w600,
@@ -342,8 +354,7 @@ class _HabitHomeWidgetState extends State<HabitHomeWidget> {
                                                   FlutterFlowTheme.of(context)
                                                       .bodySmall
                                                       .override(
-                                                        fontFamily:
-                                                            'Plus Jakarta Sans',
+                                                        fontFamily: 'Inter',
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
@@ -363,11 +374,15 @@ class _HabitHomeWidgetState extends State<HabitHomeWidget> {
                                             min: 0.0,
                                             max: 100.0,
                                             value: _model.sliderValue2 ??= 50.0,
-                                            onChanged: (newValue) {
+                                            onChanged: (newValue) async {
                                               newValue = double.parse(
                                                   newValue.toStringAsFixed(4));
                                               safeSetState(() => _model
                                                   .sliderValue2 = newValue);
+                                              safeSetState(() {
+                                                _model.sliderValue2 =
+                                                    _model.sliderValue1!;
+                                              });
                                             },
                                           ),
                                         ),
@@ -407,8 +422,7 @@ class _HabitHomeWidgetState extends State<HabitHomeWidget> {
                                                     FlutterFlowTheme.of(context)
                                                         .bodyLarge
                                                         .override(
-                                                          fontFamily:
-                                                              'Plus Jakarta Sans',
+                                                          fontFamily: 'Inter',
                                                           letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.w600,
@@ -420,8 +434,7 @@ class _HabitHomeWidgetState extends State<HabitHomeWidget> {
                                                     FlutterFlowTheme.of(context)
                                                         .bodySmall
                                                         .override(
-                                                          fontFamily:
-                                                              'Plus Jakarta Sans',
+                                                          fontFamily: 'Inter',
                                                           color: FlutterFlowTheme
                                                                   .of(context)
                                                               .secondaryText,
@@ -483,7 +496,7 @@ class _HabitHomeWidgetState extends State<HabitHomeWidget> {
                               style: FlutterFlowTheme.of(context)
                                   .titleLarge
                                   .override(
-                                    fontFamily: 'Outfit',
+                                    fontFamily: 'Inter',
                                     letterSpacing: 0.0,
                                   ),
                             ),
@@ -511,7 +524,7 @@ class _HabitHomeWidgetState extends State<HabitHomeWidget> {
                                           style: FlutterFlowTheme.of(context)
                                               .bodyLarge
                                               .override(
-                                                fontFamily: 'Plus Jakarta Sans',
+                                                fontFamily: 'Inter',
                                                 letterSpacing: 0.0,
                                                 fontWeight: FontWeight.w600,
                                               ),
@@ -521,7 +534,7 @@ class _HabitHomeWidgetState extends State<HabitHomeWidget> {
                                           style: FlutterFlowTheme.of(context)
                                               .bodySmall
                                               .override(
-                                                fontFamily: 'Plus Jakarta Sans',
+                                                fontFamily: 'Inter',
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .secondaryText,
@@ -564,7 +577,7 @@ class _HabitHomeWidgetState extends State<HabitHomeWidget> {
                                           style: FlutterFlowTheme.of(context)
                                               .bodyLarge
                                               .override(
-                                                fontFamily: 'Plus Jakarta Sans',
+                                                fontFamily: 'Inter',
                                                 letterSpacing: 0.0,
                                                 fontWeight: FontWeight.w600,
                                               ),
@@ -574,7 +587,7 @@ class _HabitHomeWidgetState extends State<HabitHomeWidget> {
                                           style: FlutterFlowTheme.of(context)
                                               .bodySmall
                                               .override(
-                                                fontFamily: 'Plus Jakarta Sans',
+                                                fontFamily: 'Inter',
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .secondaryText,
@@ -613,13 +626,15 @@ class _HabitHomeWidgetState extends State<HabitHomeWidget> {
                       color: FlutterFlowTheme.of(context).primary,
                       textStyle:
                           FlutterFlowTheme.of(context).titleMedium.override(
-                                fontFamily: 'Plus Jakarta Sans',
+                                fontFamily: 'Inter',
                                 color: FlutterFlowTheme.of(context).info,
                                 letterSpacing: 0.0,
                               ),
                       elevation: 3.0,
                       borderRadius: BorderRadius.circular(28.0),
                     ),
+                  ).animateOnActionTrigger(
+                    animationsMap['buttonOnActionTriggerAnimation']!,
                   ),
                 ].divide(const SizedBox(height: 24.0)),
               ),
