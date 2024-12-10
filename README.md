@@ -96,7 +96,7 @@ dependencies:
 - Navigation to login or registration screens.
 
 #### Code (`welcome_widget.dart`):
-```dart
+```
 FFButtonWidget(
   onPressed: () async {
     context.pushNamed('reg');
@@ -115,7 +115,7 @@ FFButtonWidget(
 - Save user information in `users` collection.
 
 #### Code (`reg_widget.dart`):
-```dart
+```
 final user = await authManager.createAccountWithEmail(
   context,
   emailController.text,
@@ -136,7 +136,7 @@ if (user != null) {
 - Log users in and fetch their profile.
 
 #### Code (`login_widget.dart`):
-```dart
+```
 final user = await authManager.signInWithEmail(
   context,
   emailController.text,
@@ -152,7 +152,7 @@ if (user != null) {
 - Query habits from Firestore using the `uid` field.
 
 #### Code (`habit_home_widget.dart`):
-```dart
+```
 StreamBuilder<List<HabitsRecord>>(
   stream: queryHabitsRecord(
     queryBuilder: (habits) => habits.where('uid', isEqualTo: currentUser.uid),
@@ -179,7 +179,7 @@ StreamBuilder<List<HabitsRecord>>(
 - Save habit details in the `habits` collection.
 
 #### Code (`addahabit_widget.dart`):
-```dart
+```
 await HabitsRecord.collection.add({
   'name': nameController.text,
   'description': descriptionController.text,
@@ -195,7 +195,7 @@ await HabitsRecord.collection.add({
 - Query friends from the `users` and `friends` collections.
 
 #### Code (`friend_list_widget.dart`):
-```dart
+```
 StreamBuilder<List<UsersRecord>>(
   stream: queryUsersRecord(
     queryBuilder: (users) => users.where(
@@ -235,6 +235,113 @@ AuthUserStreamWidget(
   ),
 ),
 ```
+### 4.8 Edit Profile
+
+#### **Purpose**
+The Edit Profile screen enables users to update their profile information in Firestore, including:
+- Display name.
+- Email address.
+- Profile picture.
+
+---
+
+#### **UI Highlights**
+- A circular profile picture that users can tap to upload a new image.
+- Two text fields for display name and email address.
+- A "Save Changes" button that confirms the updates.
+
+---
+
+#### **Firestore Integration**
+- **Collection**: `users`
+- **Fields Updated**:
+  - `email`
+  - `display_name`
+  - `photo_url` (if profile picture is updated).
+
+---
+
+#### **Step-by-Step Code Breakdown**
+
+**1. Updating Firestore Data**
+The `Save Changes` button triggers an update to the current user’s document in the `users` collection.
+
+- **Key Code** (`edit_profile_widget.dart`):
+  ```dart
+  await currentUserReference!.update(createUsersRecordData(
+    email: _model.textController2.text,
+    displayName: _model.textController1.text,
+  ));
+  ```
+
+- **Explanation**:
+  - `currentUserReference` is the reference to the current user document.
+  - `createUsersRecordData` maps the updated data to Firestore.
+
+---
+
+**2. Handling Profile Picture Upload**
+Users can tap the circular image to upload a new profile picture. The file is validated and saved locally before being stored in Firestore.
+
+- **Key Code**:
+  ```dart
+  final selectedMedia = await selectMedia(
+    mediaSource: MediaSource.photoGallery,
+    multiImage: false,
+  );
+  if (selectedMedia != null && selectedMedia.every((m) => validateFileFormat(m.storagePath, context))) {
+    var selectedUploadedFiles = selectedMedia.map((m) => FFUploadedFile(
+      name: m.storagePath.split('/').last,
+      bytes: m.bytes,
+    )).toList();
+    if (selectedUploadedFiles.isNotEmpty) {
+      setState(() {
+        _model.uploadedLocalFile = selectedUploadedFiles.first;
+      });
+    }
+  }
+  ```
+
+- **Explanation**:
+  - `selectMedia` opens the photo gallery for the user to select an image.
+  - The image is validated for format and stored temporarily.
+
+---
+
+**3. UI for Text Fields and Buttons**
+The UI includes:
+- A circular profile image with a border.
+- Text fields for editing the display name and email.
+- A button to save changes.
+
+- **Key Code**:
+  ```dart
+  TextFormField(
+    controller: _model.textController1,
+    decoration: InputDecoration(labelText: 'Display Name'),
+  ),
+  TextFormField(
+    controller: _model.textController2,
+    decoration: InputDecoration(labelText: 'Email'),
+  ),
+  FFButtonWidget(
+    onPressed: () async {
+      // Save updated profile information
+    },
+    text: 'Save Changes',
+  ),
+  ```
+
+- **Explanation**:
+  - The text fields use controllers (`textController1` and `textController2`) for data binding.
+  - The button updates Firestore with the new data.
+
+---
+
+### How It Integrates
+The **Edit Profile** page is accessible from the Profile page. The saved changes update the user’s document in Firestore and redirect back to the Profile page.
+
+
 
 ## 5. Further Discussion
 ### Alternative Features:
