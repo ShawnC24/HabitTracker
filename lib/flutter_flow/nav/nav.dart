@@ -85,7 +85,25 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'addahabit',
           path: '/addahabit',
-          builder: (context, params) => const AddahabitWidget(),
+          asyncParams: {
+            'parameter': getDoc(['habits'], HabitsRecord.fromSnapshot),
+          },
+          builder: (context, params) => AddahabitWidget(
+            habit: params.getParam(
+              'habit',
+              ParamType.DocumentReference,
+              isList: false,
+              collectionNamePath: ['habits'],
+            ),
+            parameter: params.getParam(
+              'parameter',
+              ParamType.Document,
+            ),
+            goalAmount: params.getParam(
+              'goalAmount',
+              ParamType.String,
+            ),
+          ),
         ),
         FFRoute(
           name: 'reg',
@@ -106,14 +124,33 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'HabitHome',
           path: '/habitHome',
           asyncParams: {
-            'habit': getDoc(['habits'], HabitsRecord.fromSnapshot),
+            'habits': getDoc(['habits'], HabitsRecord.fromSnapshot),
           },
           builder: (context, params) => params.isEmpty
               ? const NavBarPage(initialPage: 'HabitHome')
-              : HabitHomeWidget(
-                  habit: params.getParam(
-                    'habit',
-                    ParamType.Document,
+              : NavBarPage(
+                  initialPage: 'HabitHome',
+                  page: HabitHomeWidget(
+                    habits: params.getParam(
+                      'habits',
+                      ParamType.Document,
+                    ),
+                    habitName: params.getParam(
+                      'habitName',
+                      ParamType.String,
+                    ),
+                    goalAmount: params.getParam(
+                      'goalAmount',
+                      ParamType.String,
+                    ),
+                    unit: params.getParam(
+                      'unit',
+                      ParamType.String,
+                    ),
+                    frequency: params.getParam(
+                      'frequency',
+                      ParamType.String,
+                    ),
                   ),
                 ),
         ),
@@ -137,9 +174,22 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'friendList',
           path: '/friendList',
+          asyncParams: {
+            'shareHabit': getDoc(['habits'], HabitsRecord.fromSnapshot),
+          },
           builder: (context, params) => params.isEmpty
               ? const NavBarPage(initialPage: 'friendList')
-              : const FriendListWidget(),
+              : FriendListWidget(
+                  shareHabit: params.getParam(
+                    'shareHabit',
+                    ParamType.Document,
+                  ),
+                ),
+        ),
+        FFRoute(
+          name: 'editProfile',
+          path: '/editProfile',
+          builder: (context, params) => const EditProfileWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

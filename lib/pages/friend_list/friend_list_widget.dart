@@ -5,12 +5,18 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 import 'friend_list_model.dart';
 export 'friend_list_model.dart';
 
 class FriendListWidget extends StatefulWidget {
   /// friend list
-  const FriendListWidget({super.key});
+  const FriendListWidget({
+    super.key,
+    this.shareHabit,
+  });
+
+  final HabitsRecord? shareHabit;
 
   @override
   State<FriendListWidget> createState() => _FriendListWidgetState();
@@ -37,7 +43,10 @@ class _FriendListWidgetState extends State<FriendListWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
+      onTap: () {
+        FocusScope.of(context).unfocus();
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
@@ -52,8 +61,8 @@ class _FriendListWidgetState extends State<FriendListWidget> {
               color: FlutterFlowTheme.of(context).primaryText,
               size: 24.0,
             ),
-            onPressed: () {
-              print('IconButton pressed ...');
+            onPressed: () async {
+              context.safePop();
             },
           ),
           title: Text(
@@ -114,7 +123,7 @@ class _FriendListWidgetState extends State<FriendListWidget> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Align(
-                              alignment: const AlignmentDirectional(-1.0, -1.0),
+                              alignment: const AlignmentDirectional(0.0, 0.0),
                               child: Text(
                                 'Your Friends',
                                 style: FlutterFlowTheme.of(context)
@@ -126,80 +135,108 @@ class _FriendListWidgetState extends State<FriendListWidget> {
                                     ),
                               ),
                             ),
-                            AuthUserStreamWidget(
-                              builder: (context) => Builder(
-                                builder: (context) {
-                                  final friendList =
-                                      (currentUserDocument?.friends.toList() ??
-                                              [])
-                                          .toList();
+                            StreamBuilder<List<FriendsRecord>>(
+                              stream: queryFriendsRecord(
+                                queryBuilder: (friendsRecord) =>
+                                    friendsRecord.where(
+                                  'user2_id',
+                                  isEqualTo: currentUserUid,
+                                ),
+                              ),
+                              builder: (context, snapshot) {
+                                // Customize what your widget looks like when it's loading.
+                                if (!snapshot.hasData) {
+                                  return Center(
+                                    child: SizedBox(
+                                      width: 50.0,
+                                      height: 50.0,
+                                      child: CircularProgressIndicator(
+                                        valueColor:
+                                            AlwaysStoppedAnimation<Color>(
+                                          FlutterFlowTheme.of(context).primary,
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                }
+                                List<FriendsRecord> listViewFriendsRecordList =
+                                    snapshot.data!;
 
-                                  return ListView.separated(
-                                    padding: EdgeInsets.zero,
-                                    primary: false,
-                                    shrinkWrap: true,
-                                    scrollDirection: Axis.vertical,
-                                    itemCount: friendList.length,
-                                    separatorBuilder: (_, __) =>
-                                        const SizedBox(height: 16.0),
-                                    itemBuilder: (context, friendListIndex) {
-                                      final friendListItem =
-                                          friendList[friendListIndex];
-                                      return Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            children: [
-                                              Container(
-                                                width: 50.0,
-                                                height: 50.0,
-                                                decoration: BoxDecoration(
-                                                  color: FlutterFlowTheme.of(
+                                return ListView.separated(
+                                  padding: EdgeInsets.zero,
+                                  primary: false,
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.vertical,
+                                  itemCount: listViewFriendsRecordList.length,
+                                  separatorBuilder: (_, __) =>
+                                      const SizedBox(height: 16.0),
+                                  itemBuilder: (context, listViewIndex) {
+                                    final listViewFriendsRecord =
+                                        listViewFriendsRecordList[
+                                            listViewIndex];
+                                    return Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Container(
+                                              width: 50.0,
+                                              height: 50.0,
+                                              decoration: BoxDecoration(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .accent1,
+                                                borderRadius:
+                                                    BorderRadius.circular(25.0),
+                                              ),
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(25.0),
+                                                child: Image.network(
+                                                  'https://images.unsplash.com/photo-1730573520095-4b7dc7ce4c52?w=500&h=500',
+                                                  width: 50.0,
+                                                  height: 50.0,
+                                                  fit: BoxFit.cover,
+                                                ),
+                                              ),
+                                            ),
+                                            Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  valueOrDefault<String>(
+                                                    listViewFriendsRecord
+                                                        .displayName?.id,
+                                                    '[Display Name]',
+                                                  ),
+                                                  style: FlutterFlowTheme.of(
                                                           context)
-                                                      .accent1,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          25.0),
+                                                      .bodyLarge
+                                                      .override(
+                                                        fontFamily: 'Inter',
+                                                        letterSpacing: 0.0,
+                                                      ),
                                                 ),
-                                                child: ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          25.0),
-                                                  child: Image.network(
-                                                    'https://images.unsplash.com/photo-1640876305588-dbdab5869200?w=500&h=500',
-                                                    width: 50.0,
-                                                    height: 50.0,
-                                                    fit: BoxFit.cover,
-                                                  ),
-                                                ),
-                                              ),
-                                              Column(
-                                                mainAxisSize: MainAxisSize.min,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    'Sarah Johnson',
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyLarge
-                                                        .override(
-                                                          fontFamily: 'Inter',
-                                                          letterSpacing: 0.0,
-                                                        ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ].divide(const SizedBox(width: 12.0)),
-                                          ),
-                                          FFButtonWidget(
-                                            onPressed: () {
-                                              print('Button pressed ...');
+                                              ],
+                                            ),
+                                          ].divide(const SizedBox(width: 12.0)),
+                                        ),
+                                        Builder(
+                                          builder: (context) => FFButtonWidget(
+                                            onPressed: () async {
+                                              await Share.share(
+                                                widget.shareHabit!.name,
+                                                sharePositionOrigin:
+                                                    getWidgetBoundingBox(
+                                                        context),
+                                              );
                                             },
                                             text: 'Share Habit',
                                             options: FFButtonOptions(
@@ -226,12 +263,12 @@ class _FriendListWidgetState extends State<FriendListWidget> {
                                                   BorderRadius.circular(24.0),
                                             ),
                                           ),
-                                        ],
-                                      );
-                                    },
-                                  );
-                                },
-                              ),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              },
                             ),
                           ].divide(const SizedBox(height: 16.0)),
                         ),

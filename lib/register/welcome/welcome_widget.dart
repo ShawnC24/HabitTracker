@@ -55,7 +55,10 @@ class _WelcomeWidgetState extends State<WelcomeWidget>
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
+      onTap: () {
+        FocusScope.of(context).unfocus();
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
@@ -124,12 +127,19 @@ class _WelcomeWidgetState extends State<WelcomeWidget>
                               style: FlutterFlowTheme.of(context)
                                   .displayLarge
                                   .override(
-                                    fontFamily: 'Readex Pro',
-                                    color: Colors.white,
-                                    fontSize: 35.0,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                                fontFamily: 'Readex Pro',
+                                color: Colors.white,
+                                fontSize: 35.0,
+                                letterSpacing: 0.0,
+                                fontWeight: FontWeight.bold,
+                                shadows: [
+                                  const Shadow(
+                                    color: Colors.black,
+                                    offset: Offset(2.0, 2.0),
+                                    blurRadius: 2.0,
+                                  )
+                                ],
+                              ),
                             ),
                             Text(
                               'Build Better Habits, One Day at a Time',
@@ -182,7 +192,7 @@ class _WelcomeWidgetState extends State<WelcomeWidget>
                                 onPressed: () async {
                                   context.pushNamed('login');
                                 },
-                                text: 'Already have an account? Sign In',
+                                text: ' Have an account? Sign In',
                                 options: FFButtonOptions(
                                   width: MediaQuery.sizeOf(context).width * 1.0,
                                   height: 60.0,

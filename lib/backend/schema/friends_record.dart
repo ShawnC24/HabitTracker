@@ -30,10 +30,16 @@ class FriendsRecord extends FirestoreRecord {
   DateTime? get timestamp => _timestamp;
   bool hasTimestamp() => _timestamp != null;
 
+  // "display_name" field.
+  DocumentReference? _displayName;
+  DocumentReference? get displayName => _displayName;
+  bool hasDisplayName() => _displayName != null;
+
   void _initializeFields() {
     _user1Id = snapshotData['user1_id'] as String?;
     _user2Id = snapshotData['user2_id'] as String?;
     _timestamp = snapshotData['timestamp'] as DateTime?;
+    _displayName = snapshotData['display_name'] as DocumentReference?;
   }
 
   static CollectionReference get collection =>
@@ -74,12 +80,14 @@ Map<String, dynamic> createFriendsRecordData({
   String? user1Id,
   String? user2Id,
   DateTime? timestamp,
+  DocumentReference? displayName,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
       'user1_id': user1Id,
       'user2_id': user2Id,
       'timestamp': timestamp,
+      'display_name': displayName,
     }.withoutNulls,
   );
 
@@ -93,12 +101,13 @@ class FriendsRecordDocumentEquality implements Equality<FriendsRecord> {
   bool equals(FriendsRecord? e1, FriendsRecord? e2) {
     return e1?.user1Id == e2?.user1Id &&
         e1?.user2Id == e2?.user2Id &&
-        e1?.timestamp == e2?.timestamp;
+        e1?.timestamp == e2?.timestamp &&
+        e1?.displayName == e2?.displayName;
   }
 
   @override
-  int hash(FriendsRecord? e) =>
-      const ListEquality().hash([e?.user1Id, e?.user2Id, e?.timestamp]);
+  int hash(FriendsRecord? e) => const ListEquality()
+      .hash([e?.user1Id, e?.user2Id, e?.timestamp, e?.displayName]);
 
   @override
   bool isValidKey(Object? o) => o is FriendsRecord;

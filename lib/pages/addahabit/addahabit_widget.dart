@@ -1,3 +1,4 @@
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_choice_chips.dart';
@@ -6,7 +7,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
-import '/flutter_flow/upload_data.dart';
+import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'addahabit_model.dart';
@@ -17,7 +18,16 @@ class AddahabitWidget extends StatefulWidget {
   /// habit with a couple of common add a habit like exercise, drink water,
   /// reading, walking a dog, etc, if they don't want to use a preset habit,
   /// they can create their own habit
-  const AddahabitWidget({super.key});
+  const AddahabitWidget({
+    super.key,
+    required this.habit,
+    this.parameter,
+    this.goalAmount,
+  });
+
+  final DocumentReference? habit;
+  final HabitsRecord? parameter;
+  final String? goalAmount;
 
   @override
   State<AddahabitWidget> createState() => _AddahabitWidgetState();
@@ -41,6 +51,9 @@ class _AddahabitWidgetState extends State<AddahabitWidget>
 
     _model.descriptionTextController ??= TextEditingController();
     _model.descriptionFocusNode ??= FocusNode();
+
+    _model.textController3 ??= TextEditingController();
+    _model.textFieldFocusNode ??= FocusNode();
 
     _model.counterTextController ??= TextEditingController();
     _model.counterFocusNode ??= FocusNode();
@@ -71,7 +84,10 @@ class _AddahabitWidgetState extends State<AddahabitWidget>
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
+      onTap: () {
+        FocusScope.of(context).unfocus();
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: const Color(0xFFAEBDD1),
@@ -198,10 +214,15 @@ class _AddahabitWidgetState extends State<AddahabitWidget>
                             TextFormField(
                               controller: _model.descriptionTextController,
                               focusNode: _model.descriptionFocusNode,
+                              onChanged: (_) => EasyDebounce.debounce(
+                                '_model.descriptionTextController',
+                                const Duration(milliseconds: 2000),
+                                () => safeSetState(() {}),
+                              ),
                               autofocus: false,
                               obscureText: false,
                               decoration: InputDecoration(
-                                labelText: 'Description',
+                                labelText: 'Description ',
                                 labelStyle: FlutterFlowTheme.of(context)
                                     .bodyMedium
                                     .override(
@@ -244,6 +265,22 @@ class _AddahabitWidgetState extends State<AddahabitWidget>
                                 ),
                                 filled: true,
                                 fillColor: Colors.white,
+                                suffixIcon: _model.descriptionTextController!
+                                        .text.isNotEmpty
+                                    ? InkWell(
+                                        onTap: () async {
+                                          _model.descriptionTextController
+                                              ?.clear();
+                                          safeSetState(() {});
+                                        },
+                                        child: Icon(
+                                          Icons.clear,
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondaryText,
+                                          size: 22.0,
+                                        ),
+                                      )
+                                    : null,
                               ),
                               style: FlutterFlowTheme.of(context)
                                   .bodyLarge
@@ -256,6 +293,71 @@ class _AddahabitWidgetState extends State<AddahabitWidget>
                               validator: _model
                                   .descriptionTextControllerValidator
                                   .asValidator(context),
+                            ),
+                            SizedBox(
+                              width: double.infinity,
+                              child: TextFormField(
+                                controller: _model.textController3,
+                                focusNode: _model.textFieldFocusNode,
+                                autofocus: false,
+                                obscureText: false,
+                                decoration: InputDecoration(
+                                  isDense: true,
+                                  labelStyle: FlutterFlowTheme.of(context)
+                                      .labelMedium
+                                      .override(
+                                        fontFamily: 'Inter',
+                                        letterSpacing: 0.0,
+                                      ),
+                                  hintText: 'Goal amount (ex. 25 minutes)',
+                                  hintStyle: FlutterFlowTheme.of(context)
+                                      .labelMedium
+                                      .override(
+                                        fontFamily: 'Inter',
+                                        letterSpacing: 0.0,
+                                      ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(8.0),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(8.0),
+                                  ),
+                                  errorBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: FlutterFlowTheme.of(context).error,
+                                      width: 1.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(8.0),
+                                  ),
+                                  focusedErrorBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: FlutterFlowTheme.of(context).error,
+                                      width: 1.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(8.0),
+                                  ),
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                ),
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Inter',
+                                      letterSpacing: 0.0,
+                                    ),
+                                cursorColor:
+                                    FlutterFlowTheme.of(context).primaryText,
+                                validator: _model.textController3Validator
+                                    .asValidator(context),
+                              ),
                             ),
                             SizedBox(
                               width: double.infinity,
@@ -528,182 +630,6 @@ class _AddahabitWidgetState extends State<AddahabitWidget>
                                 ),
                               ),
                             ),
-                            Container(
-                              width: MediaQuery.sizeOf(context).width * 1.0,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(8.0),
-                                border: Border.all(
-                                  color: const Color(0xFFE0E0E0),
-                                  width: 1.0,
-                                ),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    12.0, 12.0, 12.0, 12.0),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Text(
-                                      'Icon',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Inter',
-                                            color: FlutterFlowTheme.of(context)
-                                                .secondaryText,
-                                            letterSpacing: 0.0,
-                                          ),
-                                    ),
-                                    InkWell(
-                                      splashColor: Colors.transparent,
-                                      focusColor: Colors.transparent,
-                                      hoverColor: Colors.transparent,
-                                      highlightColor: Colors.transparent,
-                                      onTap: () async {
-                                        final selectedMedia =
-                                            await selectMediaWithSourceBottomSheet(
-                                          context: context,
-                                          allowPhoto: true,
-                                        );
-                                        if (selectedMedia != null &&
-                                            selectedMedia.every((m) =>
-                                                validateFileFormat(
-                                                    m.storagePath, context))) {
-                                          safeSetState(() =>
-                                              _model.isDataUploading1 = true);
-                                          var selectedUploadedFiles =
-                                              <FFUploadedFile>[];
-
-                                          try {
-                                            selectedUploadedFiles =
-                                                selectedMedia
-                                                    .map((m) => FFUploadedFile(
-                                                          name: m.storagePath
-                                                              .split('/')
-                                                              .last,
-                                                          bytes: m.bytes,
-                                                          height: m.dimensions
-                                                              ?.height,
-                                                          width: m.dimensions
-                                                              ?.width,
-                                                          blurHash: m.blurHash,
-                                                        ))
-                                                    .toList();
-                                          } finally {
-                                            _model.isDataUploading1 = false;
-                                          }
-                                          if (selectedUploadedFiles.length ==
-                                              selectedMedia.length) {
-                                            safeSetState(() {
-                                              _model.uploadedLocalFile1 =
-                                                  selectedUploadedFiles.first;
-                                            });
-                                          } else {
-                                            safeSetState(() {});
-                                            return;
-                                          }
-                                        }
-                                      },
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Icon(
-                                            Icons.add_circle_outline,
-                                            color: FlutterFlowTheme.of(context)
-                                                .primary,
-                                            size: 24.0,
-                                          ),
-                                          InkWell(
-                                            splashColor: Colors.transparent,
-                                            focusColor: Colors.transparent,
-                                            hoverColor: Colors.transparent,
-                                            highlightColor: Colors.transparent,
-                                            onTap: () async {
-                                              final selectedMedia =
-                                                  await selectMediaWithSourceBottomSheet(
-                                                context: context,
-                                                maxWidth: 20.00,
-                                                maxHeight: 20.00,
-                                                allowPhoto: true,
-                                              );
-                                              if (selectedMedia != null &&
-                                                  selectedMedia.every((m) =>
-                                                      validateFileFormat(
-                                                          m.storagePath,
-                                                          context))) {
-                                                safeSetState(() => _model
-                                                    .isDataUploading2 = true);
-                                                var selectedUploadedFiles =
-                                                    <FFUploadedFile>[];
-
-                                                try {
-                                                  showUploadMessage(
-                                                    context,
-                                                    'Uploading file...',
-                                                    showLoading: true,
-                                                  );
-                                                  selectedUploadedFiles =
-                                                      selectedMedia
-                                                          .map((m) =>
-                                                              FFUploadedFile(
-                                                                name: m
-                                                                    .storagePath
-                                                                    .split('/')
-                                                                    .last,
-                                                                bytes: m.bytes,
-                                                                height: m
-                                                                    .dimensions
-                                                                    ?.height,
-                                                                width: m
-                                                                    .dimensions
-                                                                    ?.width,
-                                                                blurHash:
-                                                                    m.blurHash,
-                                                              ))
-                                                          .toList();
-                                                } finally {
-                                                  ScaffoldMessenger.of(context)
-                                                      .hideCurrentSnackBar();
-                                                  _model.isDataUploading2 =
-                                                      false;
-                                                }
-                                                if (selectedUploadedFiles
-                                                        .length ==
-                                                    selectedMedia.length) {
-                                                  safeSetState(() {
-                                                    _model.uploadedLocalFile2 =
-                                                        selectedUploadedFiles
-                                                            .first;
-                                                  });
-                                                  showUploadMessage(
-                                                      context, 'Success!');
-                                                } else {
-                                                  safeSetState(() {});
-                                                  showUploadMessage(context,
-                                                      'Failed to upload data');
-                                                  return;
-                                                }
-                                              }
-                                            },
-                                            child: Text(
-                                              'Choose Icon',
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily: 'Inter',
-                                                        letterSpacing: 0.0,
-                                                      ),
-                                            ),
-                                          ),
-                                        ].divide(const SizedBox(width: 8.0)),
-                                      ),
-                                    ),
-                                  ].divide(const SizedBox(height: 8.0)),
-                                ),
-                              ),
-                            ),
                           ].divide(const SizedBox(height: 16.0)),
                         ),
                       ),
@@ -758,9 +684,33 @@ class _AddahabitWidgetState extends State<AddahabitWidget>
                               frequency: _model.choiceChipsValue,
                               reminderTime: _model.datePicked,
                               units: _model.counterTextController.text,
+                              habitId: widget.habit?.id,
+                              goal: _model.textController3.text,
+                              habitStatus: 'Not Started',
+                              iconSymbol: currentUserPhoto,
                             ));
 
-                        context.pushNamed('HabitHome');
+                        context.pushNamed(
+                          'HabitHome',
+                          queryParameters: {
+                            'habitName': serializeParam(
+                              _model.nameTextController.text,
+                              ParamType.String,
+                            ),
+                            'goalAmount': serializeParam(
+                              _model.textController3.text,
+                              ParamType.String,
+                            ),
+                            'unit': serializeParam(
+                              _model.counterTextController.text,
+                              ParamType.String,
+                            ),
+                            'frequency': serializeParam(
+                              _model.choiceChipsValue,
+                              ParamType.String,
+                            ),
+                          }.withoutNulls,
+                        );
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(

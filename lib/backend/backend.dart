@@ -9,6 +9,7 @@ import 'schema/users_record.dart';
 import 'schema/habits_record.dart';
 import 'schema/add_friends_record.dart';
 import 'schema/friends_record.dart';
+import 'schema/shared_habit_record.dart';
 
 export 'dart:async' show StreamSubscription;
 export 'package:cloud_firestore/cloud_firestore.dart' hide Order;
@@ -21,6 +22,7 @@ export 'schema/users_record.dart';
 export 'schema/habits_record.dart';
 export 'schema/add_friends_record.dart';
 export 'schema/friends_record.dart';
+export 'schema/shared_habit_record.dart';
 
 /// Functions to query UsersRecords (as a Stream and as a Future).
 Future<int> queryUsersRecordCount({
@@ -165,6 +167,43 @@ Future<List<FriendsRecord>> queryFriendsRecordOnce({
     queryCollectionOnce(
       FriendsRecord.collection,
       FriendsRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+/// Functions to query SharedHabitRecords (as a Stream and as a Future).
+Future<int> querySharedHabitRecordCount({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      SharedHabitRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
+Stream<List<SharedHabitRecord>> querySharedHabitRecord({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      SharedHabitRecord.collection,
+      SharedHabitRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<SharedHabitRecord>> querySharedHabitRecordOnce({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      SharedHabitRecord.collection,
+      SharedHabitRecord.fromSnapshot,
       queryBuilder: queryBuilder,
       limit: limit,
       singleRecord: singleRecord,

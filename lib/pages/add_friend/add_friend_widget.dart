@@ -39,7 +39,10 @@ class _AddFriendWidgetState extends State<AddFriendWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
+      onTap: () {
+        FocusScope.of(context).unfocus();
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -81,7 +84,12 @@ class _AddFriendWidgetState extends State<AddFriendWidget> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       StreamBuilder<List<UsersRecord>>(
-                        stream: queryUsersRecord(),
+                        stream: queryUsersRecord(
+                          queryBuilder: (usersRecord) => usersRecord.where(
+                            'uid',
+                            isEqualTo: currentUserUid,
+                          ),
+                        ),
                         builder: (context, snapshot) {
                           // Customize what your widget looks like when it's loading.
                           if (!snapshot.hasData) {

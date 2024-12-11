@@ -14,6 +14,10 @@ class AddahabitModel extends FlutterFlowModel<AddahabitWidget> {
   FocusNode? descriptionFocusNode;
   TextEditingController? descriptionTextController;
   String? Function(BuildContext, String?)? descriptionTextControllerValidator;
+  // State field(s) for TextField widget.
+  FocusNode? textFieldFocusNode;
+  TextEditingController? textController3;
+  String? Function(BuildContext, String?)? textController3Validator;
   // State field(s) for Counter widget.
   FocusNode? counterFocusNode;
   TextEditingController? counterTextController;
@@ -25,13 +29,6 @@ class AddahabitModel extends FlutterFlowModel<AddahabitWidget> {
   set choiceChipsValue(String? val) =>
       choiceChipsValueController?.value = val != null ? [val] : [];
   DateTime? datePicked;
-  bool isDataUploading1 = false;
-  FFUploadedFile uploadedLocalFile1 =
-      FFUploadedFile(bytes: Uint8List.fromList([]));
-
-  bool isDataUploading2 = false;
-  FFUploadedFile uploadedLocalFile2 =
-      FFUploadedFile(bytes: Uint8List.fromList([]));
 
   @override
   void initState(BuildContext context) {}
@@ -43,6 +40,9 @@ class AddahabitModel extends FlutterFlowModel<AddahabitWidget> {
 
     descriptionFocusNode?.dispose();
     descriptionTextController?.dispose();
+
+    textFieldFocusNode?.dispose();
+    textController3?.dispose();
 
     counterFocusNode?.dispose();
     counterTextController?.dispose();

@@ -49,7 +49,10 @@ class _RegWidgetState extends State<RegWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
+      onTap: () {
+        FocusScope.of(context).unfocus();
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
@@ -209,7 +212,7 @@ class _RegWidgetState extends State<RegWidget> {
                                       ),
                                       filled: true,
                                       fillColor: FlutterFlowTheme.of(context)
-                                          .secondaryBackground,
+                                          .primaryBackground,
                                     ),
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
@@ -591,7 +594,7 @@ class _RegWidgetState extends State<RegWidget> {
                                     ),
                                   ),
                                 ),
-                              ],
+                              ].divide(const SizedBox(height: 5.0)),
                             ),
                           ),
                         ),

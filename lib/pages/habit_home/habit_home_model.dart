@@ -3,14 +3,9 @@ import 'habit_home_widget.dart' show HabitHomeWidget;
 import 'package:flutter/material.dart';
 
 class HabitHomeModel extends FlutterFlowModel<HabitHomeWidget> {
-  ///  State fields for stateful widgets in this page.
+  ///  Local state fields for this page.
 
-  // State field(s) for Slider widget.
-  double? sliderValue1;
-  // State field(s) for Slider widget.
-  double? sliderValue2;
-  // State field(s) for Slider widget.
-  double? sliderValue3;
+  String? dropDown;
 
   @override
   void initState(BuildContext context) {}

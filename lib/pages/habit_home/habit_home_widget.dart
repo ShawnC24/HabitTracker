@@ -1,4 +1,5 @@
 import '/backend/backend.dart';
+import '/components/dropdown_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -17,10 +18,18 @@ class HabitHomeWidget extends StatefulWidget {
   /// completed
   const HabitHomeWidget({
     super.key,
-    this.habit,
+    this.habits,
+    this.habitName,
+    this.goalAmount,
+    this.unit,
+    this.frequency,
   });
 
-  final HabitsRecord? habit;
+  final HabitsRecord? habits;
+  final String? habitName;
+  final String? goalAmount;
+  final String? unit;
+  final String? frequency;
 
   @override
   State<HabitHomeWidget> createState() => _HabitHomeWidgetState();
@@ -60,8 +69,6 @@ class _HabitHomeWidgetState extends State<HabitHomeWidget>
           !anim.applyInitialState),
       this,
     );
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -74,7 +81,10 @@ class _HabitHomeWidgetState extends State<HabitHomeWidget>
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
+      onTap: () {
+        FocusScope.of(context).unfocus();
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -132,7 +142,7 @@ class _HabitHomeWidgetState extends State<HabitHomeWidget>
                                       ),
                                 ),
                                 Text(
-                                  '3/5 Completed',
+                                  '2/3 Completed',
                                   style: FlutterFlowTheme.of(context)
                                       .bodyMedium
                                       .override(
@@ -152,8 +162,8 @@ class _HabitHomeWidgetState extends State<HabitHomeWidget>
                                 borderRadius: BorderRadius.circular(4.0),
                               ),
                               child: LinearPercentIndicator(
-                                percent: 0.8,
-                                width: MediaQuery.sizeOf(context).width * 1.0,
+                                percent: 0.66,
+                                width: MediaQuery.sizeOf(context).width * 0.8,
                                 lineHeight: 12.0,
                                 animation: true,
                                 animateFromLastPercent: true,
@@ -180,166 +190,110 @@ class _HabitHomeWidgetState extends State<HabitHomeWidget>
                         color: FlutterFlowTheme.of(context).secondaryBackground,
                         borderRadius: BorderRadius.circular(16.0),
                       ),
-                      child: Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(
-                            20.0, 20.0, 20.0, 20.0),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              'Current Habits',
-                              style: FlutterFlowTheme.of(context)
-                                  .titleLarge
-                                  .override(
-                                    fontFamily: 'Inter',
-                                    letterSpacing: 0.0,
-                                  ),
-                            ),
-                            InkWell(
-                              splashColor: Colors.transparent,
-                              focusColor: Colors.transparent,
-                              hoverColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              onLongPress: () async {
-                                var confirmDialogResponse =
-                                    await showDialog<bool>(
-                                          context: context,
-                                          builder: (alertDialogContext) {
-                                            return AlertDialog(
-                                              title: const Text('Delete Habit?'),
-                                              content: const Text(
-                                                  'Are you sure you want to delete this habit?'),
-                                              actions: [
-                                                TextButton(
-                                                  onPressed: () =>
-                                                      Navigator.pop(
-                                                          alertDialogContext,
-                                                          false),
-                                                  child: const Text('Cancel'),
-                                                ),
-                                                TextButton(
-                                                  onPressed: () =>
-                                                      Navigator.pop(
-                                                          alertDialogContext,
-                                                          true),
-                                                  child: const Text('Confirm'),
-                                                ),
-                                              ],
-                                            );
-                                          },
-                                        ) ??
-                                        false;
-                                await widget.habit!.reference.delete();
-                                await FirebaseStorage.instance
-                                    .refFromURL('')
-                                    .delete();
-                              },
-                              child: Container(
-                                width: MediaQuery.sizeOf(context).width * 1.0,
-                                decoration: BoxDecoration(
-                                  color: FlutterFlowTheme.of(context)
-                                      .primaryBackground,
-                                  borderRadius: BorderRadius.circular(12.0),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      16.0, 16.0, 16.0, 16.0),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Column(
-                                            mainAxisSize: MainAxisSize.min,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                valueOrDefault<String>(
-                                                  widget.habit?.name,
-                                                  'Name',
-                                                ),
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyLarge
-                                                        .override(
-                                                          fontFamily: 'Inter',
-                                                          letterSpacing: 0.0,
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                        ),
-                                              ),
-                                              Text(
-                                                '15 minutes daily',
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodySmall
-                                                        .override(
-                                                          fontFamily: 'Inter',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .secondaryText,
-                                                          letterSpacing: 0.0,
-                                                        ),
-                                              ),
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            width: 150.0,
-                                            child: Slider(
-                                              activeColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primary,
-                                              inactiveColor: const Color(0xFFE0E0E0),
-                                              min: 0.0,
-                                              max: 100.0,
-                                              value: _model.sliderValue1 ??=
-                                                  75.0,
-                                              onChanged: (newValue) {
-                                                newValue = double.parse(newValue
-                                                    .toStringAsFixed(4));
-                                                safeSetState(() => _model
-                                                    .sliderValue1 = newValue);
-                                              },
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ].divide(const SizedBox(height: 12.0)),
-                                  ),
-                                ),
+                    ),
+                  ),
+                  FutureBuilder<List<HabitsRecord>>(
+                    future: queryHabitsRecordOnce(
+                      queryBuilder: (habitsRecord) => habitsRecord.where(
+                        'name',
+                        isEqualTo: widget.habitName,
+                      ),
+                      limit: 1,
+                    ),
+                    builder: (context, snapshot) {
+                      // Customize what your widget looks like when it's loading.
+                      if (!snapshot.hasData) {
+                        return Center(
+                          child: SizedBox(
+                            width: 50.0,
+                            height: 50.0,
+                            child: CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                FlutterFlowTheme.of(context).primary,
                               ),
                             ),
-                            Container(
+                          ),
+                        );
+                      }
+                      List<HabitsRecord> listViewHabitsRecordList =
+                          snapshot.data!;
+
+                      return ListView.builder(
+                        padding: EdgeInsets.zero,
+                        shrinkWrap: true,
+                        scrollDirection: Axis.vertical,
+                        itemCount: listViewHabitsRecordList.length,
+                        itemBuilder: (context, listViewIndex) {
+                          final listViewHabitsRecord =
+                              listViewHabitsRecordList[listViewIndex];
+                          return InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            onLongPress: () async {
+                              var confirmDialogResponse =
+                                  await showDialog<bool>(
+                                        context: context,
+                                        builder: (alertDialogContext) {
+                                          return AlertDialog(
+                                            title: const Text('Delete Habit?'),
+                                            content: const Text(
+                                                'Are you sure you want to delete this habit?'),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () => Navigator.pop(
+                                                    alertDialogContext, false),
+                                                child: const Text('Cancel'),
+                                              ),
+                                              TextButton(
+                                                onPressed: () => Navigator.pop(
+                                                    alertDialogContext, true),
+                                                child: const Text('Confirm'),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      ) ??
+                                      false;
+                              await widget.habits!.reference.delete();
+                              await FirebaseStorage.instance
+                                  .refFromURL('')
+                                  .delete();
+                            },
+                            child: Container(
                               width: MediaQuery.sizeOf(context).width * 1.0,
                               decoration: BoxDecoration(
                                 color: FlutterFlowTheme.of(context)
-                                    .primaryBackground,
+                                    .secondaryBackground,
                                 borderRadius: BorderRadius.circular(12.0),
                               ),
-                              child: Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    16.0, 16.0, 16.0, 16.0),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                        16.0, 16.0, 16.0, 16.0),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                        Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Text(
-                                              'Read a Book',
-                                              style:
-                                                  FlutterFlowTheme.of(context)
+                                            Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  valueOrDefault<String>(
+                                                    widget.habitName,
+                                                    'Null',
+                                                  ),
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
                                                       .bodyLarge
                                                       .override(
                                                         fontFamily: 'Inter',
@@ -347,11 +301,11 @@ class _HabitHomeWidgetState extends State<HabitHomeWidget>
                                                         fontWeight:
                                                             FontWeight.w600,
                                                       ),
-                                            ),
-                                            Text(
-                                              '30 minutes daily',
-                                              style:
-                                                  FlutterFlowTheme.of(context)
+                                                ),
+                                                Text(
+                                                  '${widget.goalAmount}${widget.unit}${widget.frequency}',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
                                                       .bodySmall
                                                       .override(
                                                         fontFamily: 'Inter',
@@ -361,117 +315,25 @@ class _HabitHomeWidgetState extends State<HabitHomeWidget>
                                                                 .secondaryText,
                                                         letterSpacing: 0.0,
                                                       ),
+                                                ),
+                                              ],
                                             ),
                                           ],
                                         ),
-                                        SizedBox(
-                                          width: 150.0,
-                                          child: Slider(
-                                            activeColor:
-                                                FlutterFlowTheme.of(context)
-                                                    .primary,
-                                            inactiveColor: const Color(0xFFE0E0E0),
-                                            min: 0.0,
-                                            max: 100.0,
-                                            value: _model.sliderValue2 ??= 50.0,
-                                            onChanged: (newValue) async {
-                                              newValue = double.parse(
-                                                  newValue.toStringAsFixed(4));
-                                              safeSetState(() => _model
-                                                  .sliderValue2 = newValue);
-                                              safeSetState(() {
-                                                _model.sliderValue2 =
-                                                    _model.sliderValue1!;
-                                              });
-                                            },
-                                          ),
-                                        ),
-                                      ],
+                                      ].divide(const SizedBox(height: 12.0)),
                                     ),
-                                  ].divide(const SizedBox(height: 12.0)),
-                                ),
+                                  ),
+                                  DropdownWidget(
+                                    key: Key(
+                                        'Keyrts_${listViewIndex}_of_${listViewHabitsRecordList.length}'),
+                                  ),
+                                ].divide(const SizedBox(height: 5.0)),
                               ),
                             ),
-                            Container(
-                              width: MediaQuery.sizeOf(context).width * 1.0,
-                              decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context)
-                                    .primaryBackground,
-                                borderRadius: BorderRadius.circular(12.0),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    16.0, 16.0, 16.0, 16.0),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    if (_model.sliderValue1 == 1000.0)
-                                      Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Column(
-                                            mainAxisSize: MainAxisSize.min,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                'Exercise',
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyLarge
-                                                        .override(
-                                                          fontFamily: 'Inter',
-                                                          letterSpacing: 0.0,
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                        ),
-                                              ),
-                                              Text(
-                                                '45 minutes daily',
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodySmall
-                                                        .override(
-                                                          fontFamily: 'Inter',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .secondaryText,
-                                                          letterSpacing: 0.0,
-                                                        ),
-                                              ),
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            width: 150.0,
-                                            child: Slider(
-                                              activeColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primary,
-                                              inactiveColor: const Color(0xFFE0E0E0),
-                                              min: 0.0,
-                                              max: 100.0,
-                                              value: _model.sliderValue3 ??=
-                                                  100.0,
-                                              onChanged: (newValue) {
-                                                newValue = double.parse(newValue
-                                                    .toStringAsFixed(4));
-                                                safeSetState(() => _model
-                                                    .sliderValue3 = newValue);
-                                              },
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                  ].divide(const SizedBox(height: 12.0)),
-                                ),
-                              ),
-                            ),
-                          ].divide(const SizedBox(height: 16.0)),
-                        ),
-                      ),
-                    ),
+                          );
+                        },
+                      );
+                    },
                   ),
                   Material(
                     color: Colors.transparent,
@@ -613,7 +475,15 @@ class _HabitHomeWidgetState extends State<HabitHomeWidget>
                   ),
                   FFButtonWidget(
                     onPressed: () async {
-                      context.pushNamed('addahabit');
+                      context.pushNamed(
+                        'addahabit',
+                        queryParameters: {
+                          'habit': serializeParam(
+                            widget.habits?.reference,
+                            ParamType.DocumentReference,
+                          ),
+                        }.withoutNulls,
+                      );
                     },
                     text: 'Create New Habit',
                     options: FFButtonOptions(

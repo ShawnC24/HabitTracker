@@ -50,6 +50,26 @@ class HabitsRecord extends FirestoreRecord {
   String get units => _units ?? '';
   bool hasUnits() => _units != null;
 
+  // "habit_id" field.
+  String? _habitId;
+  String get habitId => _habitId ?? '';
+  bool hasHabitId() => _habitId != null;
+
+  // "uid" field.
+  String? _uid;
+  String get uid => _uid ?? '';
+  bool hasUid() => _uid != null;
+
+  // "goal" field.
+  String? _goal;
+  String get goal => _goal ?? '';
+  bool hasGoal() => _goal != null;
+
+  // "habitStatus" field.
+  String? _habitStatus;
+  String get habitStatus => _habitStatus ?? '';
+  bool hasHabitStatus() => _habitStatus != null;
+
   void _initializeFields() {
     _name = snapshotData['name'] as String?;
     _description = snapshotData['description'] as String?;
@@ -58,6 +78,10 @@ class HabitsRecord extends FirestoreRecord {
     _isCompleted = snapshotData['isCompleted'] as bool?;
     _iconSymbol = snapshotData['iconSymbol'] as String?;
     _units = snapshotData['units'] as String?;
+    _habitId = snapshotData['habit_id'] as String?;
+    _uid = snapshotData['uid'] as String?;
+    _goal = snapshotData['goal'] as String?;
+    _habitStatus = snapshotData['habitStatus'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -101,6 +125,10 @@ Map<String, dynamic> createHabitsRecordData({
   bool? isCompleted,
   String? iconSymbol,
   String? units,
+  String? habitId,
+  String? uid,
+  String? goal,
+  String? habitStatus,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -111,6 +139,10 @@ Map<String, dynamic> createHabitsRecordData({
       'isCompleted': isCompleted,
       'iconSymbol': iconSymbol,
       'units': units,
+      'habit_id': habitId,
+      'uid': uid,
+      'goal': goal,
+      'habitStatus': habitStatus,
     }.withoutNulls,
   );
 
@@ -128,7 +160,11 @@ class HabitsRecordDocumentEquality implements Equality<HabitsRecord> {
         e1?.reminderTime == e2?.reminderTime &&
         e1?.isCompleted == e2?.isCompleted &&
         e1?.iconSymbol == e2?.iconSymbol &&
-        e1?.units == e2?.units;
+        e1?.units == e2?.units &&
+        e1?.habitId == e2?.habitId &&
+        e1?.uid == e2?.uid &&
+        e1?.goal == e2?.goal &&
+        e1?.habitStatus == e2?.habitStatus;
   }
 
   @override
@@ -139,7 +175,11 @@ class HabitsRecordDocumentEquality implements Equality<HabitsRecord> {
         e?.reminderTime,
         e?.isCompleted,
         e?.iconSymbol,
-        e?.units
+        e?.units,
+        e?.habitId,
+        e?.uid,
+        e?.goal,
+        e?.habitStatus
       ]);
 
   @override
