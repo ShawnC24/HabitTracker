@@ -1,6 +1,4 @@
 
-
-
 # HabitFlow Tutorial: A Firebase-Integrated Habit Tracker App in Flutter
 
 ## 1. Overview
@@ -356,6 +354,7 @@ The **Edit Profile** page is accessible from the Profile page. The saved changes
 - [Firestore Database](https://firebase.google.com/docs/firestore)
 - [Flutter Documentation](https://flutter.dev/docs)
 ```
+
 
 
 
